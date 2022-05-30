@@ -148,14 +148,14 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		getContentPane().add(lblNewLabel_7);
 		
 		cboCOMPROB= new JComboBox();
-		cboCOMPROB.addItem("Sleccinar");
+		cboCOMPROB.addItem("Seleccionar");
 		cboCOMPROB.addItem("Boleta");
 		cboCOMPROB.addItem("Factura");
 		cboCOMPROB.setBounds(644, 180, 244, 21);
 		getContentPane().add(cboCOMPROB);
 		
 		cboPAIS = new JComboBox<String>();
-		cboPAIS.addItem("[Seleccione]");
+		cboPAIS.addItem("[Seleccionar]");
 		cboPAIS.addItem("Perú");
 		cboPAIS.addItem("Colombia");
 		cboPAIS.addItem("Argentina");

@@ -23,6 +23,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import javax.swing.DefaultComboBoxModel;
 
 public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 	private JTextField txtNom;
@@ -109,7 +110,8 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		txtNom.setColumns(10);
 		
 		cboComprob = new JComboBox();
-		cboComprob.addItem("Sleccinar");
+		cboComprob.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar ", "Boleta", "Factura"}));
+		cboComprob.addItem("Seleccionar");
 		cboComprob.addItem("Boleta");
 		cboComprob.addItem("Factura");
 		cboComprob.setBounds(190, 416, 320, 21);
@@ -140,7 +142,8 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		getContentPane().add(txtApe);
 		
 		cboPais = new JComboBox();
-		cboPais.addItem("Sleccinar");
+		cboPais.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar ", "Peru", "Colombia", "Argentina", "Bolivia", "Chile", "Uruguay", "Venezuela", "Brasil", "Paraguay", "Espa\u00F1a"}));
+		cboPais.addItem("Seleccionar");
 		cboPais.addItem("Peru");
 		cboPais.addItem("Colombia");
 		cboPais.addItem("Argentina");
