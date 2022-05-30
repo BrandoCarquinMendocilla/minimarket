@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 import javax.swing.JFrame;
 
-public class FrmConsultaVendedor extends JInternalFrame {
+public class FrmConsultaEmpleado extends JInternalFrame {
 
 	/**
 	 * Launch the application.
@@ -14,7 +14,7 @@ public class FrmConsultaVendedor extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmConsultaVendedor frame = new FrmConsultaVendedor();
+					FrmConsultaEmpleado frame = new FrmConsultaEmpleado();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -26,7 +26,7 @@ public class FrmConsultaVendedor extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrmConsultaVendedor() {
+	public FrmConsultaEmpleado() {
 		setIconifiable(true);
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
