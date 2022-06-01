@@ -20,6 +20,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import entidad.Cliente;
@@ -74,88 +75,88 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("CRUD de Cliente");
-		setBounds(100, 100, 1024, 715);
+		setBounds(100, 100, 705, 443);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Mantenimiento Cliente");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 25));
-		lblNewLabel.setBounds(377, 10, 272, 26);
+		lblNewLabel.setBounds(26, 22, 272, 26);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("DNI :");
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(96, 88, 81, 13);
+		lblNewLabel_1.setBounds(26, 73, 81, 13);
 		getContentPane().add(lblNewLabel_1);
 		
 		txtNOMBRE = new JTextField();
 		txtNOMBRE.addKeyListener(this);
-		txtNOMBRE.setBounds(187, 135, 255, 19);
+		txtNOMBRE.setBounds(91, 97, 120, 19);
 		getContentPane().add(txtNOMBRE);
 		txtNOMBRE.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Nombre :");
 		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(96, 134, 81, 19);
+		lblNewLabel_2.setBounds(26, 96, 81, 19);
 		getContentPane().add(lblNewLabel_2);
 		
 		txtAPELLIDO = new JTextField();
 		txtAPELLIDO.addKeyListener(this);
 		txtAPELLIDO.setColumns(10);
-		txtAPELLIDO.setBounds(187, 181, 255, 20);
+		txtAPELLIDO.setBounds(91, 125, 120, 20);
 		getContentPane().add(txtAPELLIDO);
 		
 		JLabel lblNewLabel_3 = new JLabel("Apellido :");
 		lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_3.setBounds(96, 180, 81, 19);
+		lblNewLabel_3.setBounds(26, 125, 81, 19);
 		getContentPane().add(lblNewLabel_3);
 		
 		txtDNI = new JTextField();
 		txtDNI.addKeyListener(this);
-		txtDNI.setBounds(187, 86, 255, 19);
+		txtDNI.setBounds(91, 71, 120, 19);
 		getContentPane().add(txtDNI);
 		txtDNI.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("Tel\u00E9fono :");
 		lblNewLabel_4.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_4.setBounds(96, 226, 81, 19);
+		lblNewLabel_4.setBounds(233, 70, 81, 19);
 		getContentPane().add(lblNewLabel_4);
 		
 		txtTELEF = new JTextField();
 		txtTELEF.addKeyListener(this);
-		txtTELEF.setBounds(187, 227, 255, 19);
+		txtTELEF.setBounds(304, 71, 120, 19);
 		getContentPane().add(txtTELEF);
 		txtTELEF.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("Direcci\u00F3n :");
 		lblNewLabel_5.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_5.setBounds(529, 88, 120, 13);
+		lblNewLabel_5.setBounds(233, 99, 120, 13);
 		getContentPane().add(lblNewLabel_5);
 		
 		txtDIREC = new JTextField();
 		txtDIREC.addKeyListener(this);
-		txtDIREC.setBounds(644, 86, 244, 19);
+		txtDIREC.setBounds(304, 97, 120, 19);
 		getContentPane().add(txtDIREC);
 		txtDIREC.setColumns(10);
 		
 		JLabel lblNewLabel_6 = new JLabel("Pa\u00EDs :");
 		lblNewLabel_6.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_6.setBounds(529, 137, 81, 13);
+		lblNewLabel_6.setBounds(233, 127, 81, 13);
 		getContentPane().add(lblNewLabel_6);
 		
 		JLabel lblNewLabel_7 = new JLabel("Comprobante :");
 		lblNewLabel_7.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_7.setBounds(529, 186, 120, 13);
+		lblNewLabel_7.setBounds(434, 73, 120, 13);
 		getContentPane().add(lblNewLabel_7);
 		
 		cboCOMPROB= new JComboBox();
 		cboCOMPROB.addItem("Seleccionar");
 		cboCOMPROB.addItem("Boleta");
 		cboCOMPROB.addItem("Factura");
-		cboCOMPROB.setBounds(644, 180, 244, 21);
+		cboCOMPROB.setBounds(537, 70, 110, 21);
 		getContentPane().add(cboCOMPROB);
 		
 		cboPAIS = new JComboBox<String>();
-		cboPAIS.addItem("[Seleccionar]");
+		cboPAIS.addItem("Seleccionar");
 		cboPAIS.addItem("Perú");
 		cboPAIS.addItem("Colombia");
 		cboPAIS.addItem("Argentina");
@@ -166,11 +167,11 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		cboPAIS.addItem("Brasil");
 		cboPAIS.addItem("Paraguay");
 		cboPAIS.addItem("España");
-		cboPAIS.setBounds(644, 134, 244, 21);
+		cboPAIS.setBounds(304, 124, 120, 21);
 		getContentPane().add(cboPAIS);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 411, 992, 267);
+		scrollPane.setBounds(10, 218, 673, 184);
 		getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -182,29 +183,40 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 				"ID", "DNI", "Nombre", "Apellido", "Tel\u00E9fono", "Direcci\u00F3n", "Pa\u00EDs", "Comprobante"
 			}
 		));
+		//tamano de la fila	
+				table.getColumnModel().getColumn(0).setPreferredWidth(17);
+				table.getColumnModel().getColumn(7).setPreferredWidth(90);
 		scrollPane.setViewportView(table);
 		
 		btnREGISTRAR_1 = new JButton("REGISTRAR");
 		btnREGISTRAR_1.addActionListener(this);
 		btnREGISTRAR_1.setIcon(new ImageIcon(FrmCrudCliente.class.getResource("/iconos/Add.gif")));
 		btnREGISTRAR_1.setFont(new Font("Arial", Font.BOLD, 22));
-		btnREGISTRAR_1.setBounds(96, 312, 205, 46);
+		btnREGISTRAR_1.setBounds(26, 173, 193, 35);
 		getContentPane().add(btnREGISTRAR_1);
 		
 		btnACTUALIZAR_1 = new JButton("ACTUALIZAR");
 		btnACTUALIZAR_1.addActionListener(this);
 		btnACTUALIZAR_1.setIcon(new ImageIcon(FrmCrudCliente.class.getResource("/iconos/Gear.gif")));
 		btnACTUALIZAR_1.setFont(new Font("Arial", Font.BOLD, 22));
-		btnACTUALIZAR_1.setBounds(407, 312, 205, 46);
+		btnACTUALIZAR_1.setBounds(242, 173, 205, 35);
 		getContentPane().add(btnACTUALIZAR_1);
 		
 		btnELIMINAR_1 = new JButton("ELIMINAR");
 		btnELIMINAR_1.addActionListener(this);
 		btnELIMINAR_1.setIcon(new ImageIcon(FrmCrudCliente.class.getResource("/iconos/Delete.gif")));
 		btnELIMINAR_1.setFont(new Font("Arial", Font.BOLD, 22));
-		btnELIMINAR_1.setBounds(704, 312, 205, 46);
+		btnELIMINAR_1.setBounds(477, 173, 193, 35);
 		getContentPane().add(btnELIMINAR_1);
 		
+		//alineación
+				DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+				rightRenderer.setHorizontalAlignment(JLabel.CENTER);
+				table.getColumnModel().getColumn(0).setCellRenderer(rightRenderer);
+				table.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
+				table.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+				table.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
+				table.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
 		//selecciona una sola fila
 		table.setRowSelectionAllowed(true);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

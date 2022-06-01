@@ -8,7 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Point;
+
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import entidad.Cliente;
 import model.ClienteModel;
@@ -20,10 +23,17 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.util.List;
 import java.awt.event.KeyEvent;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 	private JTextField txtNom;
@@ -33,7 +43,9 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 	private JTextField txtApe;
 	private JComboBox cboPais;
 	private JComboBox cboComprob;
-
+	private JScrollPane scrollPane;
+	private JTable table;
+	int hoveredRow = -1, hoveredColumn = -1;
 	/**
 	 * Launch the application.
 	 */
@@ -58,87 +70,84 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Registro de Clientes");
-		setBounds(100, 100, 631, 647);
+		setBounds(100, 100, 633, 435);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("REGISTRO CLIENTE");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBackground(Color.RED);
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 25));
-		lblNewLabel.setBounds(190, 46, 263, 34);
+		lblNewLabel.setBounds(10, 25, 263, 34);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nombre :");
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(63, 131, 78, 17);
+		lblNewLabel_1.setBounds(25, 81, 78, 17);
 		getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Apellido :");
 		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(63, 177, 78, 17);
+		lblNewLabel_2.setBounds(25, 108, 78, 17);
 		getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("DNI :");
 		lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_3.setBounds(63, 227, 78, 17);
+		lblNewLabel_3.setBounds(25, 135, 78, 17);
 		getContentPane().add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Tel\u00E9fono :");
 		lblNewLabel_4.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_4.setBounds(63, 272, 78, 17);
+		lblNewLabel_4.setBounds(216, 81, 78, 17);
 		getContentPane().add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Direcci\u00F3n :");
 		lblNewLabel_5.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_5.setBounds(63, 318, 78, 17);
+		lblNewLabel_5.setBounds(216, 108, 78, 17);
 		getContentPane().add(lblNewLabel_5);
 		
 		JLabel lblNewLabel_6 = new JLabel("Pa\u00EDs :");
 		lblNewLabel_6.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_6.setBounds(63, 371, 78, 13);
+		lblNewLabel_6.setBounds(216, 137, 78, 13);
 		getContentPane().add(lblNewLabel_6);
 		
 		JLabel lblNewLabel_7 = new JLabel("Comprobante :");
 		lblNewLabel_7.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_7.setBounds(63, 417, 107, 17);
+		lblNewLabel_7.setBounds(418, 81, 107, 17);
 		getContentPane().add(lblNewLabel_7);
 		
 		txtNom = new JTextField();
 		txtNom.addKeyListener(this);
-		txtNom.setBounds(190, 131, 320, 19);
+		txtNom.setBounds(91, 81, 115, 19);
 		getContentPane().add(txtNom);
 		txtNom.setColumns(10);
 		
 		cboComprob = new JComboBox();
 		cboComprob.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar ", "Boleta", "Factura"}));
-		cboComprob.addItem("Seleccionar");
-		cboComprob.addItem("Boleta");
-		cboComprob.addItem("Factura");
-		cboComprob.setBounds(190, 416, 320, 21);
+		cboComprob.setBounds(521, 80, 91, 21);
 		getContentPane().add(cboComprob);
 		
 		txtTelf = new JTextField();
 		txtTelf.addKeyListener(this);
 		txtTelf.setColumns(10);
-		txtTelf.setBounds(190, 272, 320, 19);
+		txtTelf.setBounds(293, 81, 115, 19);
 		getContentPane().add(txtTelf);
 		
 		txtDirec = new JTextField();
 		txtDirec.addKeyListener(this);
 		txtDirec.setColumns(10);
-		txtDirec.setBounds(190, 318, 320, 19);
+		txtDirec.setBounds(293, 108, 115, 19);
 		getContentPane().add(txtDirec);
 		
 		txtDni = new JTextField();
 		txtDni.addKeyListener(this);
 		txtDni.setColumns(10);
-		txtDni.setBounds(190, 227, 320, 19);
+		txtDni.setBounds(91, 135, 115, 19);
 		getContentPane().add(txtDni);
 		
 		txtApe = new JTextField();
 		txtApe.addKeyListener(this);
 		txtApe.setColumns(10);
-		txtApe.setBounds(190, 177, 320, 19);
+		txtApe.setBounds(91, 108, 115, 19);
 		getContentPane().add(txtApe);
 		
 		cboPais = new JComboBox();
@@ -154,7 +163,7 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		cboPais.addItem("Brasil");
 		cboPais.addItem("Paraguay");
 		cboPais.addItem("España");
-		cboPais.setBounds(190, 368, 320, 21);
+		cboPais.setBounds(293, 134, 115, 21);
 		getContentPane().add(cboPais);
 		
 		JButton btnREGISTRAR = new JButton("REGISTRAR");
@@ -165,12 +174,74 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		});
 		btnREGISTRAR.setIcon(new ImageIcon(FrmRegistroCliente.class.getResource("/iconos/Add.gif")));
 		btnREGISTRAR.setFont(new Font("Arial", Font.BOLD, 21));
-		btnREGISTRAR.setBounds(213, 499, 194, 55);
+		btnREGISTRAR.setBounds(418, 165, 183, 39);
 		getContentPane().add(btnREGISTRAR);
-
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 223, 602, 173);
+		getContentPane().add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"ID", "DNI", "Nombre", "Apellido", "Tel\u00E9fono", "Direcci\u00F3n", "Pa\u00EDs", "Comprobante"
+			}
+		));
+		//tamano de la fila	
+		table.getColumnModel().getColumn(0).setPreferredWidth(17);
+		table.getColumnModel().getColumn(7).setPreferredWidth(90);
+		scrollPane.setViewportView(table);
+		//alineación
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+		rightRenderer.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(rightRenderer);
+		table.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
+		table.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+		table.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
+		table.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
+		//selecciona una sola fila
+				table.setRowSelectionAllowed(true);
+				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				
+		        //desabilita mover las columnas
+				table.getTableHeader().setReorderingAllowed(false);
+				
+				//color de la fila seleccionada
+				table.setSelectionBackground(Color.BLUE);
+				
+				//No se pueda editar
+			    table.setDefaultEditor(Object.class, null);
+			    
+				//Efecto Rollover
+			    table.addMouseMotionListener(new MouseMotionListener() {
+			        @Override
+			        public void mouseMoved(MouseEvent e) {
+			            Point p = e.getPoint();
+			            hoveredRow = table.rowAtPoint(p);
+			            hoveredColumn = table.columnAtPoint(p);
+			            table.setRowSelectionInterval(hoveredRow, hoveredRow);
+			            table.repaint();    
+			        }
+			        @Override
+			        public void mouseDragged(MouseEvent e) {
+			            hoveredRow = hoveredColumn = -1;
+			            table.repaint();
+			        }
+			    });
+		lista();
 	}
 	public void mensaje(String ms) {
 		JOptionPane.showMessageDialog(this, ms);
+	}
+	void limpiarCajasTexto() {
+		txtNom.setText("");
+		txtApe.setText("");
+		txtDni.setText("");
+		txtTelf.setText("");
+		txtDirec.setText("");
+		cboComprob.requestFocus();
 	}
 	
 	private void Registrar() {
@@ -211,7 +282,8 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		int salida = model.registrarCliente(cli);
 		
 		if (salida > 0) {
-			
+			lista();
+			limpiarCajasTexto();
 			mensaje("Cliente Registrado con exito");
 
 		} else {
@@ -221,6 +293,26 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		//Vilchez
 		}
 		}
+	private void lista() {
+		ClienteModel model = new ClienteModel();
+		List<Cliente> lista = model.listaCliente();
+
+		DefaultTableModel dtm = (DefaultTableModel) table.getModel();
+		dtm.setRowCount(0);
+
+		Object[] fila = null;
+		for (Cliente x : lista) {
+			fila = new Object[] { x.getIdCliente(), 
+					x.getNombre(), 
+					x.getApellido(),
+					x.getDni(),
+					x.getTelefono(),
+					x.getDireccion(),
+					x.getPais(),
+					x.getComprobante()};
+			dtm.addRow(fila);
+		}
+	}
 	public void keyPressed(KeyEvent e) {
 	}
 	public void keyReleased(KeyEvent e) {
