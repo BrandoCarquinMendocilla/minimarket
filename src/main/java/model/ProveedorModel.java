@@ -208,12 +208,12 @@ public class ProveedorModel {
 			String sql = "select * from proveedor where nombre like ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, filtro + "%");
-			
+
 			log.info(">>> " + psmt);
-			
+
 			rs = psmt.executeQuery();
 			Proveedor obj = null;
-			while(rs.next()) {
+			while (rs.next()) {
 				obj = new Proveedor();
 				obj.setIdProveedor(1);
 				obj.setNombre(rs.getString(2));
@@ -224,17 +224,21 @@ public class ProveedorModel {
 				obj.setPais(rs.getString(7));
 				obj.setTelefono(rs.getString(8));
 				salida.add(obj);
-				
+
 			}
 		} catch (Exception e) {
-			e.printStackTrace();		
-			}finally {
-				try {
-					if (rs != null) rs.close();
-					if (psmt != null) psmt.close();
-					if (conn != null) conn.close();
-				} catch (Exception e2) {}
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
 			}
+		}
 
 		return salida;
 	}

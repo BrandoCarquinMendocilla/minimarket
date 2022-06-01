@@ -103,4 +103,5 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 		}
 
 	}
+	
 }
