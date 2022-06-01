@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 import javax.swing.JFrame;
 
-public class FrmRegistroVendedor extends JInternalFrame {
+public class FrmConsultaEmpleado extends JInternalFrame {
 
 	/**
 	 * Launch the application.
@@ -14,7 +14,7 @@ public class FrmRegistroVendedor extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmRegistroVendedor frame = new FrmRegistroVendedor();
+					FrmConsultaEmpleado frame = new FrmConsultaEmpleado();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -26,11 +26,11 @@ public class FrmRegistroVendedor extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrmRegistroVendedor() {
+	public FrmConsultaEmpleado() {
 		setIconifiable(true);
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setTitle("Registro de Vendedor");
+		setTitle("Consulta de Vendedor\r\n");
 		setBounds(100, 100, 450, 300);
 
 	}
