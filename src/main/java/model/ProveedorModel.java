@@ -205,9 +205,9 @@ public class ProveedorModel {
 		try {
 			conn = MySqlDBConexion.getConexion();
 
-			String sql = "select * from proveedor where nombre like ?";
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, filtro + "%");
+			String sql = "call sp_busca_Proveedor(?)";
+			psmt = conn.prepareCall(sql);
+			psmt.setString(1, filtro+"%" );
 
 			log.info(">>> " + psmt);
 

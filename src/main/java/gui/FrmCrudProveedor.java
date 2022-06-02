@@ -1,11 +1,16 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -18,13 +23,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import entidad.Proveedor;
 import model.ProveedorModel;
 import util.Validaciones;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
 
 public class FrmCrudProveedor extends JInternalFrame implements ActionListener, MouseListener, KeyListener {
 	private JTextField txtTelefono;
@@ -38,9 +43,10 @@ public class FrmCrudProveedor extends JInternalFrame implements ActionListener, 
 	private JButton btnActualizar;
 	private JButton btnEliminar;
 	private JButton btnLimpiar;
-	private JComboBox cboPais;
+	private JComboBox<String> cboPais;
 
 	int idseleccionado = -1;
+	int hoveredRow = -1, hoveredColumn = -1;
 
 	/**
 	 * Launch the application.
@@ -105,8 +111,8 @@ public class FrmCrudProveedor extends JInternalFrame implements ActionListener, 
 		getContentPane().add(lblNewLabel_6);
 
 		JLabel lblNewLabel_7 = new JLabel("MANTENIMIENTO PROVEEDOR");
-		lblNewLabel_7.setFont(new Font("Arial Black", Font.BOLD, 20));
-		lblNewLabel_7.setBounds(157, 11, 375, 27);
+		lblNewLabel_7.setFont(new Font("Bahnschrift", Font.BOLD, 28));
+		lblNewLabel_7.setBounds(10, 11, 443, 27);
 		getContentPane().add(lblNewLabel_7);
 
 		txtTelefono = new JTextField();
@@ -143,7 +149,7 @@ public class FrmCrudProveedor extends JInternalFrame implements ActionListener, 
 		getContentPane().add(txtCorreo);
 		txtCorreo.setColumns(10);
 
-		cboPais = new JComboBox();
+		cboPais = new JComboBox<String>();
 		cboPais.addItem("[Seleccionar]");
 		cboPais.addItem("Perú");
 		cboPais.addItem("Argentina");
@@ -194,9 +200,57 @@ public class FrmCrudProveedor extends JInternalFrame implements ActionListener, 
 		table.addMouseListener(this);
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Nombres", "RUC", "Producto",
 				"Direcci\u00F3n", "Correo", "Pa\u00EDs", "Tel\u00E9fono" }));
-		scrollPane.setViewportView(table);
+
+		// alineaciÃ³n
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+		rightRenderer.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
+		table.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
+		table.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
+
+		// tamano de la fila
+		table.getColumnModel().getColumn(0).setPreferredWidth(20);
+		table.getColumnModel().getColumn(1).setPreferredWidth(150);
+		table.getColumnModel().getColumn(2).setPreferredWidth(130);
+		table.getColumnModel().getColumn(3).setPreferredWidth(150);
+		table.getColumnModel().getColumn(4).setPreferredWidth(170);
+		table.getColumnModel().getColumn(5).setPreferredWidth(180);
+		table.getColumnModel().getColumn(6).setPreferredWidth(70);
+		table.getColumnModel().getColumn(7).setPreferredWidth(90);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+
+		// selecciona una sola fila
+		table.setRowSelectionAllowed(true);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		// desabilita mover las columnas
+		table.getTableHeader().setReorderingAllowed(false);
+
+		// color de la fila seleccionada
+		table.setSelectionBackground(Color.GREEN);
+		// No se pueda editar
+		table.setDefaultEditor(Object.class, null);
+
+		// Efecto Rollover
+		table.addMouseMotionListener(new MouseMotionListener() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Point p = e.getPoint();
+				hoveredRow = table.rowAtPoint(p);
+				hoveredColumn = table.columnAtPoint(p);
+				table.setRowSelectionInterval(hoveredRow, hoveredRow);
+				table.repaint();
+			}
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				hoveredRow = hoveredColumn = -1;
+				table.repaint();
+			}
+		});
 
 		lista();
+		scrollPane.setViewportView(table);
 
 	}
 

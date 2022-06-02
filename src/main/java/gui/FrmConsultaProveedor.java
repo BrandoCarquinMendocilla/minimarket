@@ -1,9 +1,13 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -13,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import entidad.Proveedor;
@@ -22,6 +27,7 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 	private JTextField txtFiltro;
 	private JTable table;
 	private JButton btnConsultar;
+	int hoveredRow = -1, hoveredColumn = -1;
 
 	/**
 	 * Launch the application.
@@ -47,7 +53,7 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 		setIconifiable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Consulta de Proveedor\r\n");
-		setBounds(100, 100, 618, 340);
+		setBounds(100, 100, 680, 340);
 		getContentPane().setLayout(null);
 
 		btnConsultar = new JButton("CONSULTAR\r\n");
@@ -67,12 +73,53 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 		getContentPane().add(lblNewLabel);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 98, 582, 201);
+		scrollPane.setBounds(10, 98, 644, 201);
 		getContentPane().add(scrollPane);
 
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Nombre", "RUC", "Producto",
 				"Direcci\u00F3n", "Correo", "Pa\u00EDs", "Tel\u00E9fono" }));
+
+		// tamano de la fila
+		table.getColumnModel().getColumn(0).setPreferredWidth(20);
+		table.getColumnModel().getColumn(1).setPreferredWidth(150);
+		table.getColumnModel().getColumn(2).setPreferredWidth(130);
+		table.getColumnModel().getColumn(3).setPreferredWidth(150);
+		table.getColumnModel().getColumn(4).setPreferredWidth(170);
+		table.getColumnModel().getColumn(5).setPreferredWidth(180);
+		table.getColumnModel().getColumn(6).setPreferredWidth(70);
+		table.getColumnModel().getColumn(7).setPreferredWidth(90);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+
+		// selecciona una sola fila
+		table.setRowSelectionAllowed(true);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		// desabilita mover las columnas
+		table.getTableHeader().setReorderingAllowed(false);
+
+		// color de la fila seleccionada
+		table.setSelectionBackground(Color.GREEN);
+		// No se pueda editar
+		table.setDefaultEditor(Object.class, null);
+
+		// Efecto Rollover
+		table.addMouseMotionListener(new MouseMotionListener() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Point p = e.getPoint();
+				hoveredRow = table.rowAtPoint(p);
+				hoveredColumn = table.columnAtPoint(p);
+				table.setRowSelectionInterval(hoveredRow, hoveredRow);
+				table.repaint();
+			}
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				hoveredRow = hoveredColumn = -1;
+				table.repaint();
+			}
+		});
 		scrollPane.setViewportView(table);
 
 	}
@@ -93,15 +140,15 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 		// 2 Se obtiene los campeonatos de la BD
 		ProveedorModel model = new ProveedorModel();
 		List<Proveedor> lista = model.listaProveedorPorNombre(filtro);
-		
-		//3 Se muestran los campeonatos en el JTABLE
-		
-		for(Proveedor x: lista) {
-			Object[] fila = { x.getIdProveedor(),x.getNombre(),x.getRuc(),x.getProducto(),x.getDireccion(),
-					x.getCorreo(),x.getPais(),x.getTelefono()};
+
+		// 3 Se muestran los campeonatos en el JTABLE
+
+		for (Proveedor x : lista) {
+			Object[] fila = { x.getIdProveedor(), x.getNombre(), x.getRuc(), x.getProducto(), x.getDireccion(),
+					x.getCorreo(), x.getPais(), x.getTelefono() };
 			dtm.addRow(fila);
 		}
 
 	}
-	
+
 }
