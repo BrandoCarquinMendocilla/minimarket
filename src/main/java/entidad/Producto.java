@@ -3,7 +3,7 @@ package entidad;
 public class Producto {
 	private int idProducto ;
 	private String nombre;
-	private String categoria;
+	private int categoria;
 	private String precio;
 	private String stock;
 	private String peso;
@@ -20,10 +20,10 @@ public class Producto {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getCategoria() {
+	public int getCategoria() {
 		return categoria;
 	}
-	public void setCategoria(String categoria) {
+	public void setCategoria(int categoria) {
 		this.categoria = categoria;
 	}
 	public String getPrecio() {

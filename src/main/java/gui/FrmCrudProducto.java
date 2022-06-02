@@ -22,10 +22,12 @@ import javax.swing.table.DefaultTableModel;
 
 import entidad.Producto;
 import model.ProductoModel;
+import util.JComboBoxBD;
 import util.Validaciones;
 
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -44,6 +46,9 @@ public class FrmCrudProducto extends JInternalFrame {
 	int idseleccionado=-1;
 	int hoveredRow = -1, hoveredColumn = -1;
 
+	ResourceBundle rb = ResourceBundle.getBundle("SENTENCIAS_MYSQL");
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -125,12 +130,7 @@ public class FrmCrudProducto extends JInternalFrame {
 		lblCategoria.setBounds(215, 71, 74, 17);
 		getContentPane().add(lblCategoria);
 		
-		cboCategoria = new JComboBox();
-		cboCategoria.addItem("Seleccionar");
-		cboCategoria.addItem("Bebidas");
-		cboCategoria.addItem("Sanck");
-		cboCategoria.addItem("Postres");
-		cboCategoria.addItem("Otros");
+		cboCategoria = new JComboBoxBD(rb.getString("MYSQL_CATEGORIA"));
 		cboCategoria.setBounds(299, 67, 124, 22);
 		getContentPane().add(cboCategoria);
 		
@@ -263,6 +263,7 @@ public class FrmCrudProducto extends JInternalFrame {
 		getContentPane().add(btnProducto_1_1);
 
 		listarProductos();
+		
 	}
 	void mensaje (String x) {
 		JOptionPane.showMessageDialog(this, x);
@@ -278,7 +279,8 @@ public class FrmCrudProducto extends JInternalFrame {
 	
 	void ingresar() {
 		String nom = txtNombre.getText().trim();
-		String cat = cboCategoria.getSelectedItem().toString();
+		int cat;
+		cat = ProductoModel.findByNombre(cboCategoria.getSelectedItem().toString(),rb.getString("TABLA_CATEGORIA"),rb.getString("CAMPO_CATEGORIA"));
 		String pre = txtPrecio.getText();
 		String stock  = txtStock.getText().trim();
 		String peso = cboPeso.getSelectedItem().toString();
@@ -350,7 +352,8 @@ public class FrmCrudProducto extends JInternalFrame {
 		int fila = table.getSelectedRow();
 		idseleccionado = (Integer)table.getValueAt(fila,0);
 		String nom = (String)table.getValueAt(fila, 1);
-		String cat = (String)table.getValueAt(fila, 4);
+		int cat;
+		cat = ProductoModel.findByNombre(cboCategoria.getSelectedItem().toString(),rb.getString("TABLA_CATEGORIA"),rb.getString("CAMPO_CATEGORIA"));
 		String pre = (String)table.getValueAt(fila, 5);
 		String stock  = (String)table.getValueAt(fila, 6);
 		String peso = (String)table.getValueAt(fila, 2);
@@ -367,7 +370,8 @@ public class FrmCrudProducto extends JInternalFrame {
 	
 	void actualizar() {
 		String nom = txtNombre.getText().trim();
-		String cat = cboCategoria.getSelectedItem().toString();
+		int cat;
+		cat = ProductoModel.findByNombre(cboCategoria.getSelectedItem().toString(),rb.getString("TABLA_CATEGORIA"),rb.getString("CAMPO_CATEGORIA"));
 		String pre = txtPrecio.getText().trim();
 		String stock  = txtStock.getText();
 		String peso = cboPeso.getSelectedItem().toString();

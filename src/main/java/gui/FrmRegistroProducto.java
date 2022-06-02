@@ -24,12 +24,14 @@ import org.w3c.dom.events.MouseEvent;
 
 import entidad.Producto;
 import model.ProductoModel;
+import util.JComboBoxBD;
 import util.Validaciones;
 
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -46,6 +48,7 @@ public class FrmRegistroProducto extends JInternalFrame {
 	private JComboBox cboPeso;
 	int hoveredRow = -1, hoveredColumn = -1;
 
+	ResourceBundle rb = ResourceBundle.getBundle("SENTENCIAS_MYSQL");
 	/**
 	 * Launch the application.
 	 */
@@ -110,12 +113,7 @@ public class FrmRegistroProducto extends JInternalFrame {
 		lblCategoria.setBounds(221, 83, 74, 17);
 		getContentPane().add(lblCategoria);
 		
-		cboCategoria = new JComboBox();
-		cboCategoria.addItem("Seleccionar");
-		cboCategoria.addItem("Bebidas");
-		cboCategoria.addItem("Sanck");
-		cboCategoria.addItem("Postres");
-		cboCategoria.addItem("Otros");
+		cboCategoria = new JComboBoxBD(rb.getString("MYSQL_CATEGORIA"));
 		cboCategoria.setBounds(305, 79, 124, 22);
 		getContentPane().add(cboCategoria);
 		
@@ -187,7 +185,7 @@ public class FrmRegistroProducto extends JInternalFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Id", "Descripci\u00F3n","Peso","Cantidad", "Categoria", "Precio", "Stock"
+				"Id", "Nombre","Categoria","Precio", "Stock", "Peso", "Cant. Peso"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -247,6 +245,7 @@ public class FrmRegistroProducto extends JInternalFrame {
 		getContentPane().add(lblNewLabel_3_1);
 		//Mostrar datos 
 		listarProductos();
+		table.repaint();
 	}
 	void mensaje (String x) {
 		JOptionPane.showMessageDialog(this, x);
@@ -261,7 +260,8 @@ public class FrmRegistroProducto extends JInternalFrame {
 	}
 	void ingresar() {
 		String nom = txtNombre.getText().trim();
-		String cat = cboCategoria.getSelectedItem().toString();
+		int cat;
+		cat = ProductoModel.findByNombre(cboCategoria.getSelectedItem().toString(),rb.getString("TABLA_CATEGORIA"),rb.getString("CAMPO_CATEGORIA"));
 		String pre = txtPrecio.getText().trim();
 		String stock  = txtStock.getText().trim();
 		String peso = cboPeso.getSelectedItem().toString();
@@ -321,11 +321,11 @@ public class FrmRegistroProducto extends JInternalFrame {
 			fila= new Object[] {
 					x.getIdProducto(),
 					x.getNombre(),
-					x.getPeso(),
-					x.getCantidadPeso(),
 					x.getCategoria(),
 					x.getPrecio(),
 					x.getStock(),
+					x.getPeso(),
+					x.getCantidadPeso(),
 			};
 			dtm.addRow(fila);
 		}

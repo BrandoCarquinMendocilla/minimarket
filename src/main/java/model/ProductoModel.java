@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 import entidad.Producto;
 import util.MySqlDBConexion;
 
@@ -21,7 +23,7 @@ public class ProductoModel {
 			String  sql = "insert into producto values(null,?,?,curtime(),?,?,?,?)";
 			pstm = conexion.prepareStatement(sql);
 			pstm.setString(1,producto.getNombre());
-			pstm.setString(2,producto.getCategoria());
+			pstm.setInt(2,producto.getCategoria());
 			pstm.setString(3,producto.getPrecio());
 			pstm.setString(4,producto.getStock());
 			pstm.setString(5,producto.getPeso());
@@ -45,7 +47,7 @@ public class ProductoModel {
 			}
 		return salida;
 	}
-	
+	//Llamar a los productos
 	public List<Producto> listarProducto(){
 		ArrayList<Producto> salida = new ArrayList<Producto>();
 		Connection conexion= null;
@@ -64,7 +66,7 @@ public class ProductoModel {
 				obj = new Producto();
 				obj.setIdProducto(rs.getInt(1));
 				obj.setNombre(rs.getString(2));
-				obj.setCategoria(rs.getString(3));
+				obj.setCategoria(rs.getInt(3));
 				obj.setPrecio(rs.getString(5));
 				obj.setStock(rs.getString(6));
 				obj.setPeso(rs.getString(7));
@@ -132,7 +134,7 @@ public class ProductoModel {
 			String  sql = "update producto set nombre=?,categoria=?,precio=?,stock=?,peso=?,cantidadPeso=? where idProducto=?";
 			pstm = conexion.prepareStatement(sql);
 			pstm.setString(1,producto.getNombre());
-			pstm.setString(2,producto.getCategoria());
+			pstm.setInt(2,producto.getCategoria());
 			pstm.setString(3,producto.getPrecio());
 			pstm.setString(4,producto.getStock());
 			pstm.setString(5,producto.getPeso());
@@ -157,5 +159,39 @@ public class ProductoModel {
 			}
 		return salida;
 	}
+	
+	//Llamamos al indice de cada categoria d eproducto seleccionado
+	public static int findByNombre(String nombreBuscar, String nombreTabla,String nombreColumna) {
+		int codigo=-1;
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+			cn=MySqlDBConexion.getConexion();
+			String sql="select * from "+nombreTabla +" where "+nombreColumna+" = '"+nombreBuscar+"'";
+			
+			pstm=cn.prepareStatement(sql);
+			rs=pstm.executeQuery();
+			
+			if(rs.next()) {
+				codigo=rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error de fallo");
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstm!=null) pstm.close();
+				if(cn!=null) cn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		
+		return codigo;
+	}
+	
 	
 }

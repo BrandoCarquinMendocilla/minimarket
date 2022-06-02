@@ -23,7 +23,7 @@ public class JComboBoxBD extends JComboBox<String> {
 			rs = pstm.executeQuery();
 			addItem("[seleccione]");
 			while (rs.next()) {
-				addItem(rs.getString(1) + ": " + rs.getString(2));
+				addItem(rs.getString(2));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,7 +51,7 @@ public class JComboBoxBD extends JComboBox<String> {
 			rs = pstm.executeQuery();
 			addItem(texto);
 			while (rs.next()) {
-				addItem(rs.getString(1) + ": " + rs.getString(2));
+				addItem(rs.getString(2));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
