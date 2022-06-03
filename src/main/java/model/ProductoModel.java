@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import entidad.Producto;
 import util.MySqlDBConexion;
@@ -193,5 +195,48 @@ public class ProductoModel {
 		return codigo;
 	}
 	
+	//Buscar
+	public static void buscar(String nombre, JTable tblProductos) {
+		DefaultTableModel ModeloTabla;
+		
+		
+		String [] columnas = {"Id", "Nombre","Categoria","Precio", "Stock", "Peso", "Cant. Peso"};
+		String [] registro = new String[7];
+	    ModeloTabla=new DefaultTableModel(null,columnas); 
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs =null;
+		try {
+			cn=MySqlDBConexion.getConexion();
+			String sql="select * from producto where nombre like '%"+nombre+"%'";
+			pstm=cn.prepareStatement(sql);
+			rs=pstm.executeQuery();
+
+			while(rs.next()) {
+				registro[0]=rs.getString("idProducto");
+				registro[1]=rs.getString("nombre");
+		        registro[2]=rs.getString("categoria");
+		        registro[3]=rs.getString("precio");
+		        registro[4]=rs.getString("stock");
+		        registro[5]=rs.getString("peso");
+		        registro[6]=rs.getString("cantidadPeso");
+				
+		        ModeloTabla.addRow(registro);
+			}
+			
+			tblProductos.setModel(ModeloTabla);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			if(cn!=null) {
+				try {
+					cn.close();
+				} catch (Exception e2) {
+	                JOptionPane.showMessageDialog(null, e2, "Error de desconexión", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+	}
 	
 }
