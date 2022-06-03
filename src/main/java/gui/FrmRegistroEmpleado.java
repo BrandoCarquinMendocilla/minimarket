@@ -8,7 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Point;
+
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import entidad.Cliente;
 import entidad.Empleado;
@@ -18,14 +21,20 @@ import util.Validaciones;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
-import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.util.List;
 import java.awt.event.KeyEvent;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class FrmRegistroEmpleado extends JInternalFrame implements KeyListener {
 	private JLabel lblCodigo;
@@ -43,7 +52,11 @@ public class FrmRegistroEmpleado extends JInternalFrame implements KeyListener {
 	private JTextField txtCorreo;
 	private JComboBox cboCategoria;
 	private JButton btnRegistrar;
+	private JTable table;
 
+	int hoveredRow = -1, hoveredColumn = -1;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -68,90 +81,90 @@ public class FrmRegistroEmpleado extends JInternalFrame implements KeyListener {
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Registro de Empleado");
-		setBounds(100, 100, 510, 390);
+		setBounds(100, 100, 600, 459);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("REGISTRO EMPLEADO");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBackground(Color.RED);
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 25));
-		lblNewLabel.setBounds(97, 38, 298, 34);
+		lblNewLabel.setFont(new Font("Bahnschrift", Font.BOLD, 28));
+		lblNewLabel.setBounds(44, 23, 298, 34);
 		getContentPane().add(lblNewLabel);
 		{
 			lblCodigo = new JLabel("C\u00F3digo: ");
-			lblCodigo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblCodigo.setBounds(23, 101, 90, 13);
+			lblCodigo.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblCodigo.setBounds(33, 84, 90, 20);
 			getContentPane().add(lblCodigo);
 		}
 		{
 			lblNombre = new JLabel("Nombre: ");
-			lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblNombre.setBounds(23, 143, 90, 13);
+			lblNombre.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblNombre.setBounds(33, 114, 90, 20);
 			getContentPane().add(lblNombre);
 		}
 		{
 			lblApellido = new JLabel("Apellido:");
-			lblApellido.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblApellido.setBounds(262, 143, 90, 13);
+			lblApellido.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblApellido.setBounds(262, 84, 90, 20);
 			getContentPane().add(lblApellido);
 		}
 		{
 			lblDNI = new JLabel("DNI:");
-			lblDNI.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblDNI.setBounds(23, 184, 90, 13);
+			lblDNI.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblDNI.setBounds(33, 144, 90, 20);
 			getContentPane().add(lblDNI);
 		}
 		{
 			lblTelefono = new JLabel("Tel\u00E9fono:");
-			lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblTelefono.setBounds(262, 184, 90, 13);
+			lblTelefono.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblTelefono.setBounds(262, 114, 90, 20);
 			getContentPane().add(lblTelefono);
 		}
 		{
 			lblCorreo = new JLabel("Correo:");
-			lblCorreo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblCorreo.setBounds(23, 225, 90, 13);
+			lblCorreo.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblCorreo.setBounds(33, 174, 90, 20);
 			getContentPane().add(lblCorreo);
 		}
 		{
 			lblCategoria = new JLabel("Categor\u00EDa:");
-			lblCategoria.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblCategoria.setBounds(262, 225, 90, 13);
+			lblCategoria.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblCategoria.setBounds(262, 144, 90, 20);
 			getContentPane().add(lblCategoria);
 		}
 		{
 			txtIdEmpleado = new JTextField();
-			txtIdEmpleado.setBounds(113, 99, 120, 19);
+			txtIdEmpleado.setBounds(113, 84, 120, 19);
 			getContentPane().add(txtIdEmpleado);
 			txtIdEmpleado.setColumns(10);
 		}
 		{
 			txtNombre = new JTextField();
-			txtNombre.setBounds(113, 141, 120, 19);
+			txtNombre.setBounds(113, 114, 120, 19);
 			getContentPane().add(txtNombre);
 			txtNombre.setColumns(10);
 		}
 		{
 			txtApellido = new JTextField();
-			txtApellido.setBounds(346, 141, 120, 19);
+			txtApellido.setBounds(346, 84, 120, 19);
 			getContentPane().add(txtApellido);
 			txtApellido.setColumns(10);
 		}
 		{
 			txtDni = new JTextField();
-			txtDni.setBounds(113, 182, 120, 19);
+			txtDni.setBounds(113, 144, 120, 19);
 			getContentPane().add(txtDni);
 			txtDni.setColumns(10);
 		}
 		{
 			txtTelefono = new JTextField();
-			txtTelefono.setBounds(346, 182, 120, 19);
+			txtTelefono.setBounds(346, 114, 120, 19);
 			getContentPane().add(txtTelefono);
 			txtTelefono.setColumns(10);
 		}
 		{
 			txtCorreo = new JTextField();
-			txtCorreo.setBounds(113, 223, 120, 19);
+			txtCorreo.setBounds(113, 174, 120, 19);
 			getContentPane().add(txtCorreo);
 			txtCorreo.setColumns(10);
 		}
@@ -163,7 +176,7 @@ public class FrmRegistroEmpleado extends JInternalFrame implements KeyListener {
 			cboCategoria.addItem("Administrador");
 			cboCategoria.addItem("Limpieza");
 			cboCategoria.addItem("Reponedor");
-			cboCategoria.setBounds(347, 222, 119, 21);
+			cboCategoria.setBounds(347, 143, 119, 21);
 			getContentPane().add(cboCategoria);
 		}
 		{
@@ -174,13 +187,94 @@ public class FrmRegistroEmpleado extends JInternalFrame implements KeyListener {
 				}
 			});
 			btnRegistrar.setFont(new Font("Arial", Font.BOLD, 21));
-			btnRegistrar.setBounds(159, 275, 200, 50);
+			btnRegistrar.setBounds(357, 174, 200, 50);
 			getContentPane().add(btnRegistrar);
 		}
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 236, 568, 184);
+		getContentPane().add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+				new Object[][] {},
+				new String[] {
+					"ID", "Nombre", "Apellido", "DNI", "Teléfono", "Correo","Categoria"}
+		));
+		
+		//Tamaño de las tablas
+		table.getColumnModel().getColumn(0).setPreferredWidth(20);
+		table.getColumnModel().getColumn(1).setPreferredWidth(150);
+		table.getColumnModel().getColumn(2).setPreferredWidth(130);
+		table.getColumnModel().getColumn(3).setPreferredWidth(150);
+		table.getColumnModel().getColumn(4).setPreferredWidth(170);
+		table.getColumnModel().getColumn(5).setPreferredWidth(180);
+		table.getColumnModel().getColumn(6).setPreferredWidth(70);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+				
+		//selecciona una sola fila
+		table.setRowSelectionAllowed(true);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						
+		//desabilita mover las columnas
+		table.getTableHeader().setReorderingAllowed(false);
+						
+		//color de la fila seleccionada
+		table.setSelectionBackground(Color.GREEN);
+		
+		//No se pueda editar
+		table.setDefaultEditor(Object.class, null);
+					    
+		//Efecto Rollover
+		table.addMouseMotionListener(new MouseMotionListener() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					Point p = e.getPoint();
+					hoveredRow = table.rowAtPoint(p);
+					hoveredColumn = table.columnAtPoint(p);
+					table.setRowSelectionInterval(hoveredRow, hoveredRow);
+					table.repaint();    
+				}
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					hoveredRow = hoveredColumn = -1;
+					table.repaint();
+				}
+		});
+		
+		lista();
+		scrollPane.setViewportView(table);
 	}
 	
 	public void mensaje(String ms) {
 		JOptionPane.showMessageDialog(this, ms);
+	}
+	void limpiarCajasTexto() {
+		txtNombre.setText("");
+		txtApellido.setText("");
+		txtDni.setText("");
+		txtTelefono.setText("");
+		txtCorreo.setText("");
+		cboCategoria.requestFocus();
+	}
+	private void lista() {
+		EmpleadoModel model = new EmpleadoModel();
+		List<Empleado> lista = model.ListarEmpleado();
+
+		DefaultTableModel dtm = (DefaultTableModel) table.getModel();
+		dtm.setRowCount(0);
+
+		Object[] fila = null;
+		for (Empleado x : lista) {
+			fila = new Object[] { x.getIdEmpleado(), 
+					x.getNombre(), 
+					x.getApellido(),
+					x.getDni(),
+					x.getTelefono(),
+					x.getCorreo(),
+					x.getCategoria()};
+			dtm.addRow(fila);
+		}
 	}
 	protected void actionPerformedBtnRegistrar(ActionEvent e) {
 	
@@ -216,6 +310,8 @@ public class FrmRegistroEmpleado extends JInternalFrame implements KeyListener {
 			int salida = model.RegistrarEmpleado(obj);
 
 			if (salida > 0) {
+				lista();
+				limpiarCajasTexto();
 				mensaje("Se insertó el empleado exitosamente");
 			} else {
 				mensaje("Error en el Registro");

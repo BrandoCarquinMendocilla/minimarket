@@ -73,89 +73,89 @@ public class FrmCrudEmpleado extends JInternalFrame {
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("CRUD de Empleado");
-		setBounds(100, 100, 960, 750);
+		setBounds(100, 100, 599, 480);
 		getContentPane().setLayout(null);
 		{
 			lblMantenimientoVendedor = new JLabel("Mantenimiento Empleado");
-			lblMantenimientoVendedor.setFont(new Font("Arial", Font.BOLD, 36));
-			lblMantenimientoVendedor.setBounds(255, 37, 450, 50);
+			lblMantenimientoVendedor.setFont(new Font("Arial", Font.BOLD, 28));
+			lblMantenimientoVendedor.setBounds(38, 11, 450, 50);
 			getContentPane().add(lblMantenimientoVendedor);
 		}
 		{
 			lblCodigo = new JLabel("C\u00F3digo: ");
-			lblCodigo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblCodigo.setBounds(22, 115, 80, 25);
+			lblCodigo.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblCodigo.setBounds(27, 72, 80, 25);
 			getContentPane().add(lblCodigo);
 		}
 		{
 			lblNombre = new JLabel("Nombre:");
-			lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblNombre.setBounds(22, 160, 80, 25);
+			lblNombre.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblNombre.setBounds(27, 107, 80, 25);
 			getContentPane().add(lblNombre);
 		}
 		{
 			lblApellido = new JLabel("Apellido:");
-			lblApellido.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblApellido.setBounds(22, 205, 80, 25);
+			lblApellido.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblApellido.setBounds(27, 142, 80, 25);
 			getContentPane().add(lblApellido);
 		}
 		{
 			lblDni = new JLabel("DNI:");
-			lblDni.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblDni.setBounds(22, 250, 80, 25);
+			lblDni.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblDni.setBounds(27, 177, 80, 25);
 			getContentPane().add(lblDni);
 		}
 		{
 			lblTelefono = new JLabel("Tel\u00E9fono:");
-			lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblTelefono.setBounds(460, 160, 80, 25);
+			lblTelefono.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblTelefono.setBounds(320, 71, 80, 25);
 			getContentPane().add(lblTelefono);
 		}
 		{
 			lblCorreo = new JLabel("Correo: ");
-			lblCorreo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblCorreo.setBounds(460, 205, 80, 25);
+			lblCorreo.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblCorreo.setBounds(320, 107, 80, 25);
 			getContentPane().add(lblCorreo);
 		}
 		{
 			lblCategoria = new JLabel("Categor\u00EDa:");
-			lblCategoria.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblCategoria.setBounds(460, 250, 80, 25);
+			lblCategoria.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			lblCategoria.setBounds(320, 142, 80, 25);
 			getContentPane().add(lblCategoria);
 		}
 		{
 			txtIdEmpleado = new JTextField();
-			txtIdEmpleado.setBounds(130, 115, 160, 25);
+			txtIdEmpleado.setBounds(102, 71, 160, 25);
 			getContentPane().add(txtIdEmpleado);
 			txtIdEmpleado.setColumns(10);
 		}
 		{
 			txtNombre = new JTextField();
-			txtNombre.setBounds(130, 160, 159, 25);
+			txtNombre.setBounds(102, 107, 159, 25);
 			getContentPane().add(txtNombre);
 			txtNombre.setColumns(10);
 		}
 		{
 			txtApellido = new JTextField();
-			txtApellido.setBounds(129, 205, 160, 25);
+			txtApellido.setBounds(102, 142, 160, 25);
 			getContentPane().add(txtApellido);
 			txtApellido.setColumns(10);
 		}
 		{
 			txtDni = new JTextField();
-			txtDni.setBounds(129, 250, 160, 25);
+			txtDni.setBounds(102, 177, 160, 25);
 			getContentPane().add(txtDni);
 			txtDni.setColumns(10);
 		}
 		{
 			txtTelefono = new JTextField();
-			txtTelefono.setBounds(610, 160, 160, 25);
+			txtTelefono.setBounds(410, 71, 160, 25);
 			getContentPane().add(txtTelefono);
 			txtTelefono.setColumns(10);
 		}
 		{
 			txtCorreo = new JTextField();
-			txtCorreo.setBounds(610, 205, 160, 25);
+			txtCorreo.setBounds(410, 106, 160, 25);
 			getContentPane().add(txtCorreo);
 			txtCorreo.setColumns(10);
 		}
@@ -167,7 +167,7 @@ public class FrmCrudEmpleado extends JInternalFrame {
 			cboCategoria.addItem("Administrador");
 			cboCategoria.addItem("Limpieza");
 			cboCategoria.addItem("Reponedor");
-			cboCategoria.setBounds(610, 250, 160, 25);
+			cboCategoria.setBounds(410, 141, 160, 25);
 			getContentPane().add(cboCategoria);
 		}
 		{
@@ -177,8 +177,8 @@ public class FrmCrudEmpleado extends JInternalFrame {
 					actionPerformedBtnRegistrar(e);
 				}
 			});
-			btnRegistrar.setFont(new Font("Arial", Font.BOLD, 21));
-			btnRegistrar.setBounds(102, 309, 200, 50);
+			btnRegistrar.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			btnRegistrar.setBounds(26, 212, 160, 40);
 			getContentPane().add(btnRegistrar);
 		}
 		{
@@ -188,8 +188,8 @@ public class FrmCrudEmpleado extends JInternalFrame {
 					actionPerformedBtnActualizar(e);
 				}
 			});
-			btnActualizar.setFont(new Font("Arial", Font.BOLD, 21));
-			btnActualizar.setBounds(368, 309, 200, 50);
+			btnActualizar.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			btnActualizar.setBounds(223, 212, 160, 40);
 			getContentPane().add(btnActualizar);
 		}
 		{
@@ -199,13 +199,13 @@ public class FrmCrudEmpleado extends JInternalFrame {
 					actionPerformedBtnEliminar(e);
 				}
 			});
-			btnEliminar.setFont(new Font("Arial", Font.BOLD, 21));
-			btnEliminar.setBounds(655, 309, 200, 50);
+			btnEliminar.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			btnEliminar.setBounds(410, 212, 160, 40);
 			getContentPane().add(btnEliminar);
 		}
 		{
 			scrEmpleado = new JScrollPane();
-			scrEmpleado.setBounds(10, 372, 928, 339);
+			scrEmpleado.setBounds(10, 278, 567, 163);
 			getContentPane().add(scrEmpleado);
 			{
 				table = new JTable();
@@ -219,6 +219,15 @@ public class FrmCrudEmpleado extends JInternalFrame {
 				scrEmpleado.setViewportView(table);
 			}
 		}
+		
+		JLabel lblNewLabel_3 = new JLabel("_______________________________________________________");
+		lblNewLabel_3.setBounds(27, 45, 340, 14);
+		getContentPane().add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_6 = new JLabel("Lista de Empleados:");
+		lblNewLabel_6.setFont(new Font("Bahnschrift", Font.BOLD, 13));
+		lblNewLabel_6.setBounds(10, 262, 138, 14);
+		getContentPane().add(lblNewLabel_6);
 
 	}
 	
@@ -454,7 +463,4 @@ public class FrmCrudEmpleado extends JInternalFrame {
 			e.consume();
 		}
 	}
-
-
-	
 }
