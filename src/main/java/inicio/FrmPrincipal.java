@@ -70,8 +70,7 @@ public class FrmPrincipal extends JFrame implements ActionListener {
 	private JMenuItem mntmConsultaCliente;
 	private JMenuItem mntmConsultaProductos;
 	private JMenuItem mntmConsultaProveedor;
-	private JMenuItem mntmConsultaVendedor;
-	private JMenuItem mntmConsultaCaja;
+	private JMenuItem mntmConsultaEmpleado;
 	private JMenuItem mntmReporteClientes;
 	private JMenuItem mntmReportesProductos;
 	private JMenuItem mntmReporteBoletas;
@@ -195,15 +194,10 @@ public class FrmPrincipal extends JFrame implements ActionListener {
 		mntmConsultaProveedor.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/iconos/Users.gif")));
 		mnNewMenu_3.add(mntmConsultaProveedor);
 
-		mntmConsultaVendedor = new JMenuItem("Vendedor");
-		mntmConsultaVendedor.addActionListener(this);
-		mntmConsultaVendedor.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/iconos/User group.gif")));
-		mnNewMenu_3.add(mntmConsultaVendedor);
-
-		mntmConsultaCaja = new JMenuItem("Caja");
-		mntmConsultaCaja.addActionListener(this);
-		mntmConsultaCaja.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/iconos/Cash register.gif")));
-		mnNewMenu_3.add(mntmConsultaCaja);
+		mntmConsultaEmpleado = new JMenuItem("Empleado");
+		mntmConsultaEmpleado.addActionListener(this);
+		mntmConsultaEmpleado.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/iconos/User group.gif")));
+		mnNewMenu_3.add(mntmConsultaEmpleado);
 
 		JMenu mnNewMenu_4 = new JMenu("Reportes\r\n");
 		mnNewMenu_4.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/iconos/Database.gif")));
@@ -274,7 +268,7 @@ public class FrmPrincipal extends JFrame implements ActionListener {
 		if (e.getSource() == mntmReporteClientes) {
 			actionPerformedMntmReporteClientesJMenuItem(e);
 		}
-		if (e.getSource() == mntmConsultaVendedor) {
+		if (e.getSource() == mntmConsultaEmpleado) {
 			actionPerformedMntmConsultaVendedorJMenuItem(e);
 		}
 		if (e.getSource() == mntmConsultaProveedor) {
