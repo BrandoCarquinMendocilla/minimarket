@@ -176,4 +176,38 @@ public class EmpleadoModel {
 
 		return salida;
 	}
+	
+	public static int findByNombre(String nombreBuscar, String nombreTabla,String nombreColumna) {
+		int codigo=-1;
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+			cn=MySqlDBConexion.getConexion();
+			String sql="select * from "+nombreTabla +" where "+nombreColumna+" = '"+nombreBuscar+"'";
+			
+			pstm=cn.prepareStatement(sql);
+			rs=pstm.executeQuery();
+			
+			if(rs.next()) {
+				codigo=rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error de fallo");
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstm!=null) pstm.close();
+				if(cn!=null) cn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		
+		return codigo;
+	}
+	
+	
 }

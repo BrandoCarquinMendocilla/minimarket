@@ -1,28 +1,19 @@
 package gui;
-
+//brando Javier Carquin Mendocilla
 import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.Font;
-import java.util.List;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import entidad.Producto;
 import model.ProductoModel;
-
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class FrmConsultaProductos extends JInternalFrame {
 	private JTextField textField;

@@ -1,41 +1,36 @@
 package gui;
 
-
+//brando Javier Carquin Mendocilla
 import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.DefaultTableModel;
-
-import org.w3c.dom.events.MouseEvent;
 
 import entidad.Producto;
 import model.ProductoModel;
 import util.JComboBoxBD;
 import util.Validaciones;
-
-import javax.swing.border.BevelBorder;
-import javax.swing.border.SoftBevelBorder;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseMotionAdapter;
 
 
 public class FrmRegistroProducto extends JInternalFrame {
@@ -262,8 +257,8 @@ public class FrmRegistroProducto extends JInternalFrame {
 		String nom = txtNombre.getText().trim();
 		int cat;
 		cat = ProductoModel.findByNombre(cboCategoria.getSelectedItem().toString(),rb.getString("TABLA_CATEGORIA"),rb.getString("CAMPO_CATEGORIA"));
-		String pre = txtPrecio.getText().trim();
-		String stock  = txtStock.getText().trim();
+		double pre = Double.parseDouble(txtPrecio.getText());
+		int stock  = Integer.parseInt(txtStock.getText());
 		String peso = cboPeso.getSelectedItem().toString();
 		String cantPe = txtCantidadPeso.getText().trim();
 		
@@ -273,11 +268,11 @@ public class FrmRegistroProducto extends JInternalFrame {
 			txtNombre.requestFocusInWindow();
 		}else if(cboCategoria.getSelectedIndex()==0) {
 			mensaje("Seleccione una categoria");
-		}else if(!pre.matches(Validaciones.PRECIO)) {
+		}else if(!(pre<=0.0)) {
 			mensaje("Ingrese correctamente el precio 0.0");
 			txtPrecio.setText("");
 			txtPrecio.requestFocusInWindow();
-		}else if(!stock.matches(Validaciones.STOCK)) {
+		}else if(!(stock>0 && stock>100)) {
 			mensaje("Ingrese correctamente el stock");
 			txtStock.setText("");
 			txtStock.requestFocusInWindow();
@@ -318,16 +313,19 @@ public class FrmRegistroProducto extends JInternalFrame {
 		dtm.setRowCount(0);
 		Object[] fila = null;
 		for(Producto x : lista) {
-			fila= new Object[] {
-					x.getIdProducto(),
-					x.getNombre(),
-					x.getCategoria(),
-					x.getPrecio(),
-					x.getStock(),
-					x.getPeso(),
-					x.getCantidadPeso(),
-			};
-			dtm.addRow(fila);
+			if(x.getStock()>0) {
+				fila= new Object[] {
+						x.getIdProducto(),
+						x.getNombre(),
+						x.getCategoria(),
+						x.getPrecio(),
+						x.getStock(),
+						x.getPeso(),
+						x.getCantidadPeso(),
+				};
+				dtm.addRow(fila);
+			}
+			
 		}
 	}
 	

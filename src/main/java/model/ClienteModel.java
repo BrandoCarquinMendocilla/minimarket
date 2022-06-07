@@ -24,7 +24,7 @@ public class ClienteModel {
 			conn = MySqlDBConexion.getConexion();
 			
 			//Se prepara el sql server
-			String sql = "insert into cliente value(null,?,?,?,?,?,?,?)";
+			String sql = "insert into cliente value(null,?,?,?,?,?,?)";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1,cli.getDni());
 			pstm.setString(2,cli.getNombre());
@@ -32,7 +32,6 @@ public class ClienteModel {
 			pstm.setString(4,cli.getTelefono());
 			pstm.setString(5,cli.getDireccion());
 			pstm.setString(6,cli.getPais());
-			pstm.setString(7,cli.getComprobante());
 			
 			Log.info(">>>"+pstm);
 			
@@ -96,7 +95,7 @@ public class ClienteModel {
 			// PASO 1 : CREAR LA CONEXION
 			conn = MySqlDBConexion.getConexion();
 			// PASO 2 : SE PREPARA EL SQL
-			String sql = "update cliente set dni=?,nombre=?,apellido=?,telefono=?,dirección=?,pais=?,comprobante=? where idCliente=?";
+			String sql = "update cliente set dni=?,nombre=?,apellido=?,telefono=?,dirección=?,pais=? where idCliente=?";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, obj.getDni());
 			pstm.setString(2, obj.getNombre());
@@ -104,8 +103,7 @@ public class ClienteModel {
 			pstm.setString(4, obj.getTelefono());
 			pstm.setString(5, obj.getDireccion());
 			pstm.setString(6, obj.getPais());
-			pstm.setString(7, obj.getComprobante());
-			pstm.setInt(8, obj.getIdCliente());
+			pstm.setInt(7, obj.getIdCliente());
 
 			log.info(">>>" + pstm);
 
@@ -146,13 +144,12 @@ public class ClienteModel {
 			while(rs.next()) {
 				obj= new Cliente();
 				obj.setIdCliente(rs.getInt(1));
-				obj.setNombre(rs.getString(2));
-				obj.setApellido(rs.getString(3));
-				obj.setDni(rs.getString(4));
+				obj.setDni(rs.getString(2));
+				obj.setNombre(rs.getString(3));
+				obj.setApellido(rs.getString(4));
 				obj.setTelefono(rs.getString(5));
 				obj.setDireccion(rs.getString(6));
 				obj.setPais(rs.getString(7));
-				obj.setComprobante(rs.getString(8));
 				salida.add(obj);
 			}
 		}catch (Exception e) {
@@ -166,6 +163,37 @@ public class ClienteModel {
 			} catch (Exception e2) {}
 		}
 		return salida;
+	}
+	public static int findByNombre(String nombreBuscar, String nombreTabla,String nombreColumna) {
+		int codigo=-1;
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+			cn=MySqlDBConexion.getConexion();
+			String sql="select * from "+nombreTabla +" where "+nombreColumna+" = '"+nombreBuscar+"'";
+			
+			pstm=cn.prepareStatement(sql);
+			rs=pstm.executeQuery();
+			
+			if(rs.next()) {
+				codigo=rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error de fallo");
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstm!=null) pstm.close();
+				if(cn!=null) cn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		
+		return codigo;
 	}
 
 }

@@ -100,7 +100,6 @@ public class FrmPrincipal extends JFrame implements ActionListener {
 	 */
 	public FrmPrincipal() {
 		setExtendedState(Frame.MAXIMIZED_BOTH);
-		setResizable(false);
 		setTitle("Sistema Minimarket \"Tambito Mass\"");
 		setBounds(100, 100, 1382, 688);
 

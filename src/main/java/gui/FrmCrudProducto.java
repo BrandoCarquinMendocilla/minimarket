@@ -1,5 +1,5 @@
 package gui;
-
+//brando Javier Carquin Mendocilla
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -281,8 +281,8 @@ public class FrmCrudProducto extends JInternalFrame {
 		String nom = txtNombre.getText().trim();
 		int cat;
 		cat = ProductoModel.findByNombre(cboCategoria.getSelectedItem().toString(),rb.getString("TABLA_CATEGORIA"),rb.getString("CAMPO_CATEGORIA"));
-		String pre = txtPrecio.getText();
-		String stock  = txtStock.getText().trim();
+		double pre = Double.parseDouble(txtPrecio.getText());
+		int stock  = Integer.parseInt(txtStock.getText());
 		String peso = cboPeso.getSelectedItem().toString();
 		String cantPe = txtCantidadPeso.getText();
 		
@@ -292,15 +292,15 @@ public class FrmCrudProducto extends JInternalFrame {
 			txtNombre.requestFocusInWindow();
 		}else if(cboCategoria.getSelectedIndex()==0) {
 			mensaje("Seleccione una categoria");
-		}else if(!pre.matches(Validaciones.PRECIO)) {
+		}else if(!(pre<=0)) {
 			mensaje("Ingrese correctamente el precio 0.0");
 			txtPrecio.setText("");
 			txtPrecio.requestFocusInWindow();
-		}else if(!stock.matches(Validaciones.STOCK)) {
-			mensaje("Ingrese correctamente el stock");
-			txtStock.setText("");
-			txtStock.requestFocusInWindow();
-		}else if(cboPeso.getSelectedIndex()==0){
+		}else if(!(stock>0 && stock>100)) {
+				mensaje("Ingrese correctamente el stock");
+				txtStock.setText("");
+				txtStock.requestFocusInWindow();
+			}else if(cboPeso.getSelectedIndex()==0){
 			mensaje("Seleccione el peso del producto");
 		}else if(!cantPe.matches(Validaciones.PRECIO)) {
 			mensaje("Ingrese el peso en 0.0 (Decimales)");
@@ -336,16 +336,18 @@ public class FrmCrudProducto extends JInternalFrame {
 		dtm.setRowCount(0);
 		Object[] fila = null;
 		for(Producto x : lista) {
-			fila= new Object[] {
-					x.getIdProducto(),
-					x.getNombre(),
-					x.getPeso(),
-					x.getCantidadPeso(),
-					x.getCategoria(),
-					x.getPrecio(),
-					x.getStock(),
-			};
-			dtm.addRow(fila);
+			if(x.getStock()>0) {
+				fila= new Object[] {
+						x.getIdProducto(),
+						x.getNombre(),
+						x.getPeso(),
+						x.getCantidadPeso(),
+						x.getCategoria(),
+						x.getPrecio(),
+						x.getStock(),
+				};
+				dtm.addRow(fila);
+			}
 		}
 	}
 	void buscar() {
@@ -355,15 +357,15 @@ public class FrmCrudProducto extends JInternalFrame {
 		int cat;
 		cat = ProductoModel.findByNombre(cboCategoria.getSelectedItem().toString(),rb.getString("TABLA_CATEGORIA"),rb.getString("CAMPO_CATEGORIA"));
 		String pre = (String)table.getValueAt(fila, 5);
-		String stock  = (String)table.getValueAt(fila, 6);
-		String peso = (String)table.getValueAt(fila, 2);
+		int stock  = (Integer)table.getValueAt(fila, 6);
+		Double peso = (Double)table.getValueAt(fila, 2);
 		String cantPe = (String)table.getValueAt(fila, 3);
 		System.out.println(nom+"-"+cat+"-"+pre+"-"+stock+"-"+peso+"-"+cantPe);
 		
 		txtNombre.setText(nom);
 		cboCategoria.setSelectedItem(cat);
 		txtPrecio.setText(pre);
-		txtStock.setText(stock);
+		txtStock.setText(""+stock);
 		cboPeso.setSelectedItem(peso);
 		txtCantidadPeso.setText(cantPe);
 	}
@@ -372,8 +374,8 @@ public class FrmCrudProducto extends JInternalFrame {
 		String nom = txtNombre.getText().trim();
 		int cat;
 		cat = ProductoModel.findByNombre(cboCategoria.getSelectedItem().toString(),rb.getString("TABLA_CATEGORIA"),rb.getString("CAMPO_CATEGORIA"));
-		String pre = txtPrecio.getText().trim();
-		String stock  = txtStock.getText();
+		Double pre = Double.parseDouble(txtPrecio.getText());
+		int stock  = Integer.parseInt(txtStock.getText());
 		String peso = cboPeso.getSelectedItem().toString();
 		String cantPe = txtCantidadPeso.getText().trim();
 		
@@ -386,11 +388,11 @@ public class FrmCrudProducto extends JInternalFrame {
 			txtNombre.requestFocusInWindow();
 		}else if(cboCategoria.getSelectedIndex()==0) {
 			mensaje("Seleccione una categoria");
-		}else if(!pre.matches(Validaciones.PRECIO)) {
+		}else if(!(pre<=0)) {
 			mensaje("Ingrese correctamente el precio 0.0");
 			txtPrecio.setText("");
 			txtPrecio.requestFocusInWindow();
-		}else if(!stock.matches(Validaciones.STOCK)) {
+		}else if(!(stock>0 && stock>100)) {
 			mensaje("Ingrese correctamente el stock");
 			txtStock.setText("");
 			txtStock.requestFocusInWindow();
@@ -424,22 +426,32 @@ public class FrmCrudProducto extends JInternalFrame {
 		}
 	}
 	void eliminar() {
-		if(idseleccionado==-1) {
-			mensaje("Seleccionar una fila para eliminar");
-		}else {
-			ProductoModel model = new ProductoModel();
-			int salida = model.eliminarProducto(idseleccionado);
+		
+		try {
+			 String id= JOptionPane.showInputDialog("Ingrese el codigo de producto a eliminar");
+			int cod = Integer.parseInt(id);
+			
+			
+			//if(idseleccionado==-1) {
+				//mensaje("Seleccionar una fila para eliminar");
+			//}else {
+				ProductoModel model = new ProductoModel();
+				int salida = model.eliminarProducto(cod);//idseleccionado
 
-			if (salida > 0) {
-				listarProductos();
-				idseleccionado=-1;
-				mensaje("Producto Eliminado con exito");
-				limpiar();
-				
-			} else {
-				mensaje("Error en la eliminacion");
-			}
+				if (salida > 0) {
+					listarProductos();
+					idseleccionado=-1;
+					mensaje("Producto Eliminado con exito");
+					limpiar();
+					
+				} else {
+					mensaje("Error en la eliminacion");
+			//	}
+				}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Proceso cancelado - No se elimino ningun producto");
 		}
+	
 	}
 	
 }

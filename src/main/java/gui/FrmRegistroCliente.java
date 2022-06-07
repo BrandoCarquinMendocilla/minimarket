@@ -42,7 +42,6 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 	private JTextField txtDni;
 	private JTextField txtApe;
 	private JComboBox cboPais;
-	private JComboBox cboComprob;
 	private JScrollPane scrollPane;
 	private JTable table;
 	int hoveredRow = -1, hoveredColumn = -1;
@@ -110,21 +109,11 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		lblNewLabel_6.setBounds(216, 137, 78, 13);
 		getContentPane().add(lblNewLabel_6);
 		
-		JLabel lblNewLabel_7 = new JLabel("Comprobante :");
-		lblNewLabel_7.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_7.setBounds(418, 81, 107, 17);
-		getContentPane().add(lblNewLabel_7);
-		
 		txtNom = new JTextField();
 		txtNom.addKeyListener(this);
 		txtNom.setBounds(91, 81, 115, 19);
 		getContentPane().add(txtNom);
 		txtNom.setColumns(10);
-		
-		cboComprob = new JComboBox();
-		cboComprob.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar ", "Boleta", "Factura"}));
-		cboComprob.setBounds(521, 80, 91, 21);
-		getContentPane().add(cboComprob);
 		
 		txtTelf = new JTextField();
 		txtTelf.addKeyListener(this);
@@ -186,12 +175,11 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "DNI", "Nombre", "Apellido", "Tel\u00E9fono", "Direcci\u00F3n", "Pa\u00EDs", "Comprobante"
+				"ID", "DNI", "Nombre", "Apellido", "Tel\u00E9fono", "Direcci\u00F3n", "Pa\u00EDs"
 			}
 		));
 		//tamano de la fila	
 		table.getColumnModel().getColumn(0).setPreferredWidth(17);
-		table.getColumnModel().getColumn(7).setPreferredWidth(90);
 		scrollPane.setViewportView(table);
 		//alineación
 		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
@@ -200,7 +188,7 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		table.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
 		table.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
 		table.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
-		table.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
+
 		//selecciona una sola fila
 				table.setRowSelectionAllowed(true);
 				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -241,7 +229,7 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		txtDni.setText("");
 		txtTelf.setText("");
 		txtDirec.setText("");
-		cboComprob.requestFocus();
+
 	}
 	
 	private void Registrar() {
@@ -251,7 +239,7 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		String telf =txtTelf.getText();
 		String direc =txtDirec.getText();
 		String pais =cboPais.getSelectedItem().toString();
-		String comp =cboComprob.getSelectedItem().toString();
+
 		
 		if (!nom.matches(Validaciones.TEXTO)) {
 			mensaje("El nombre es de 2 a 20 caracteres");
@@ -265,9 +253,7 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 			mensaje("La dirección es de 2 a 20 caracteres");
 		} else if (cboPais.getSelectedIndex() == 0) {
 			mensaje("Seleccione el país");
-		} else if (cboComprob.getSelectedIndex() == 0) {
-			mensaje("Seleccione el tipo de Comprobante de Pago");
-		} else {
+		}else {
 		
 		Cliente cli = new Cliente();
 		cli.setDni(dni);
@@ -276,7 +262,6 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		cli.setTelefono(telf);
 		cli.setDireccion(direc);
 		cli.setPais(pais);
-		cli.setComprobante(comp);
 		
 		ClienteModel model = new ClienteModel();
 		int salida = model.registrarCliente(cli);
@@ -308,8 +293,7 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 					x.getDni(),
 					x.getTelefono(),
 					x.getDireccion(),
-					x.getPais(),
-					x.getComprobante()};
+					x.getPais()};
 			dtm.addRow(fila);
 		}
 	}

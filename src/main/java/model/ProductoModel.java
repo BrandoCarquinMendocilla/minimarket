@@ -26,8 +26,8 @@ public class ProductoModel {
 			pstm = conexion.prepareStatement(sql);
 			pstm.setString(1,producto.getNombre());
 			pstm.setInt(2,producto.getCategoria());
-			pstm.setString(3,producto.getPrecio());
-			pstm.setString(4,producto.getStock());
+			pstm.setDouble(3,producto.getPrecio());
+			pstm.setInt(4,producto.getStock());
 			pstm.setString(5,producto.getPeso());
 			pstm.setString(6,producto.getCantidadPeso());
 			
@@ -69,8 +69,8 @@ public class ProductoModel {
 				obj.setIdProducto(rs.getInt(1));
 				obj.setNombre(rs.getString(2));
 				obj.setCategoria(rs.getInt(3));
-				obj.setPrecio(rs.getString(5));
-				obj.setStock(rs.getString(6));
+				obj.setPrecio(rs.getDouble(5));
+				obj.setStock(rs.getInt(6));
 				obj.setPeso(rs.getString(7));
 				obj.setCantidadPeso(rs.getString(8));
 				salida.add(obj);
@@ -101,8 +101,8 @@ public class ProductoModel {
 		PreparedStatement pstm =null;
 		try {
 			conexion = MySqlDBConexion.getConexion();
-			
-			String  sql = "delete from producto where idProducto=?";
+						
+			String  sql = "update producto set stock=0 where idProducto=?";
 			pstm = conexion.prepareStatement(sql);
 			pstm.setInt(1,idProducto);
 			
@@ -137,8 +137,8 @@ public class ProductoModel {
 			pstm = conexion.prepareStatement(sql);
 			pstm.setString(1,producto.getNombre());
 			pstm.setInt(2,producto.getCategoria());
-			pstm.setString(3,producto.getPrecio());
-			pstm.setString(4,producto.getStock());
+			pstm.setDouble(3,producto.getPrecio());
+			pstm.setInt(4,producto.getStock());
 			pstm.setString(5,producto.getPeso());
 			pstm.setString(6,producto.getCantidadPeso());
 			pstm.setInt(7, producto.getIdProducto());
@@ -162,7 +162,7 @@ public class ProductoModel {
 		return salida;
 	}
 	
-	//Llamamos al indice de cada categoria d eproducto seleccionado
+	//Llamamos al indice de cada categoria de producto seleccionado
 	public static int findByNombre(String nombreBuscar, String nombreTabla,String nombreColumna) {
 		int codigo=-1;
 		Connection cn = null;
@@ -188,12 +188,46 @@ public class ProductoModel {
 				if(pstm!=null) pstm.close();
 				if(cn!=null) cn.close();
 			} catch (Exception e2) {
+			
+			}
+		}
+		
+		return codigo;
+	}
+	
+	public static double findByPrecio(String nombreBuscar, String nombreTabla,String nombreColumna) {
+		double codigo=-1.0;
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+			cn=MySqlDBConexion.getConexion();
+			String sql="select * from "+nombreTabla +" where "+nombreColumna+" = '"+nombreBuscar+"'";
+			
+			pstm=cn.prepareStatement(sql);
+			rs=pstm.executeQuery();
+			
+			if(rs.next()) {
+				codigo=rs.getDouble(5);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error de fallo");
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstm!=null) pstm.close();
+				if(cn!=null) cn.close();
+			} catch (Exception e2) {
 				// TODO: handle exception
 			}
 		}
 		
 		return codigo;
 	}
+	
+	
 	
 	//Buscar
 	public static void buscar(String nombre, JTable tblProductos) {

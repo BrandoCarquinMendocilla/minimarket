@@ -43,7 +43,6 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 	private JTextField txtDIREC;
 	private JScrollPane scrollPane;
 	private JComboBox<String> cboPAIS;
-	private JComboBox<String> cboCOMPROB;
 	private JTable table;
 	int idSeleccionado =-1;
 	int hoveredRow = -1, hoveredColumn = -1;
@@ -143,18 +142,6 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		lblNewLabel_6.setBounds(233, 127, 81, 13);
 		getContentPane().add(lblNewLabel_6);
 		
-		JLabel lblNewLabel_7 = new JLabel("Comprobante :");
-		lblNewLabel_7.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_7.setBounds(434, 73, 120, 13);
-		getContentPane().add(lblNewLabel_7);
-		
-		cboCOMPROB= new JComboBox();
-		cboCOMPROB.addItem("Seleccionar");
-		cboCOMPROB.addItem("Boleta");
-		cboCOMPROB.addItem("Factura");
-		cboCOMPROB.setBounds(537, 70, 110, 21);
-		getContentPane().add(cboCOMPROB);
-		
 		cboPAIS = new JComboBox<String>();
 		cboPAIS.addItem("Seleccionar");
 		cboPAIS.addItem("Perú");
@@ -180,12 +167,11 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "DNI", "Nombre", "Apellido", "Tel\u00E9fono", "Direcci\u00F3n", "Pa\u00EDs", "Comprobante"
+				"ID", "DNI", "Nombre", "Apellido", "Tel\u00E9fono", "Direcci\u00F3n", "Pa\u00EDs"
 			}
 		));
 		//tamano de la fila	
 				table.getColumnModel().getColumn(0).setPreferredWidth(17);
-				table.getColumnModel().getColumn(7).setPreferredWidth(90);
 		scrollPane.setViewportView(table);
 		
 		btnREGISTRAR_1 = new JButton("REGISTRAR");
@@ -216,7 +202,7 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 				table.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
 				table.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
 				table.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
-				table.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
+
 		//selecciona una sola fila
 		table.setRowSelectionAllowed(true);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -312,8 +298,7 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 					x.getDni(),
 					x.getTelefono(),
 					x.getDireccion(),
-					x.getPais(),
-					x.getComprobante()};
+					x.getPais()};
 			dtm.addRow(fila);
 		}
 	}
@@ -324,7 +309,7 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		String tel = txtTELEF.getText();
 		String dir = txtDIREC.getText();
 		String pai = cboPAIS.getSelectedItem().toString();
-		String com = cboCOMPROB.getSelectedItem().toString();
+
 
 		if (!nom.matches(Validaciones.TEXTO)) {
 			mensaje("El nombre es de 2 a 20 caracteres");
@@ -338,8 +323,6 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 			mensaje("La dirección es de 2 a 20 caracteres");
 		} else if (cboPAIS.getSelectedIndex() == 0) {
 			mensaje("Seleccione el país");
-		} else if (cboCOMPROB.getSelectedIndex() == 0) {
-			mensaje("Seleccione el tipo de Comprobante de Pago");
 		} else {
 			Cliente cli = new Cliente();
 			cli.setNombre(nom);
@@ -348,7 +331,6 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 			cli.setTelefono(tel);
 			cli.setDireccion(dir);
 			cli.setPais(pai);
-			cli.setComprobante(com);
 			
 
 			ClienteModel model = new ClienteModel();
@@ -373,10 +355,10 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		 String telefono = (String)table.getValueAt(fila, 4);
 		 String direccion = (String)table.getValueAt(fila, 5);
 		 String pais = (String)table.getValueAt(fila, 6);
-		 String comprobante = (String)table.getValueAt(fila, 7);
+
 		 
 		 System.out.println(idSeleccionado + "-" + nombre + "-" + apellido + "-" + dni + "-" + telefono +
-				 			"-" + direccion + "-" + pais + "-" + comprobante);
+				 			"-" + direccion + "-" + pais );
 		 
 		 txtNOMBRE.setText(nombre);
 		 txtAPELLIDO.setText(apellido);
@@ -384,7 +366,7 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		 txtTELEF.setText(telefono);
 		 txtDIREC.setText(direccion);
 		 cboPAIS.setSelectedItem(pais);
-		 cboCOMPROB.setSelectedItem(comprobante);
+
 		 }
 	private void elimina() {
 		if(idSeleccionado==-1) {
@@ -410,7 +392,7 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		String tel = txtTELEF.getText();
 		String dir = txtDIREC.getText();
 		String pai = cboPAIS.getSelectedItem().toString();
-		String com = cboCOMPROB.getSelectedItem().toString();
+
 		
 		if (idSeleccionado == -1) {
 			mensaje("Seleccione una fila");
@@ -426,9 +408,7 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 			mensaje("La dirección es de 2 a 20 caracteres");
 		} else if (cboPAIS.getSelectedIndex() == 0) {
 			mensaje("Seleccione el país");
-		} else if (cboCOMPROB.getSelectedIndex() == 0) {
-			mensaje("Seleccione el tipo de Comprobante de Pago");
-		} else {
+		}  else {
 			Cliente cli = new Cliente();
 			cli.setIdCliente(idSeleccionado);
 			cli.setNombre(nom);
@@ -437,7 +417,6 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 			cli.setTelefono(tel);
 			cli.setDireccion(dir);
 			cli.setPais(pai);
-			cli.setComprobante(com);
 			
 
 			ClienteModel model = new ClienteModel();

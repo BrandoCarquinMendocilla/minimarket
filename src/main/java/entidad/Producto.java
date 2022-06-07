@@ -1,13 +1,18 @@
 package entidad;
-
+//brando Javier Carquin Mendocilla
 public class Producto {
 	private int idProducto ;
 	private String nombre;
 	private int categoria;
-	private String precio;
-	private String stock;
+	private Double precio;
+	private int stock;
 	private String peso;
 	private String cantidadPeso;
+	
+	
+	
+	
+	
 	public int getIdProducto() {
 		return idProducto;
 	}
@@ -26,16 +31,16 @@ public class Producto {
 	public void setCategoria(int categoria) {
 		this.categoria = categoria;
 	}
-	public String getPrecio() {
+	public Double getPrecio() {
 		return precio;
 	}
-	public void setPrecio(String precio) {
+	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
-	public String getStock() {
+	public int getStock() {
 		return stock;
 	}
-	public void setStock(String stock) {
+	public void setStock(int stock) {
 		this.stock = stock;
 	}
 	public String getPeso() {
