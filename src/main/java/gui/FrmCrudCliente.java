@@ -293,9 +293,9 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		Object[] fila = null;
 		for (Cliente x : lista) {
 			fila = new Object[] { x.getIdCliente(), 
+					x.getDni(),
 					x.getNombre(), 
 					x.getApellido(),
-					x.getDni(),
 					x.getTelefono(),
 					x.getDireccion(),
 					x.getPais()};
@@ -325,9 +325,9 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 			mensaje("Seleccione el país");
 		} else {
 			Cliente cli = new Cliente();
+			cli.setDni(dni);
 			cli.setNombre(nom);
 			cli.setApellido(ape);
-			cli.setDni(dni);
 			cli.setTelefono(tel);
 			cli.setDireccion(dir);
 			cli.setPais(pai);
@@ -358,11 +358,12 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 
 		 
 		 System.out.println(idSeleccionado + "-" + nombre + "-" + apellido + "-" + dni + "-" + telefono +
-				 			"-" + direccion + "-" + pais );
+				
+				 "-" + direccion + "-" + pais );
 		 
+		 txtDNI.setText(dni);
 		 txtNOMBRE.setText(nombre);
 		 txtAPELLIDO.setText(apellido);
-		 txtDNI.setText(dni);
 		 txtTELEF.setText(telefono);
 		 txtDIREC.setText(direccion);
 		 cboPAIS.setSelectedItem(pais);
@@ -386,9 +387,9 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		}
 	}
 	private void actualiza() {
+		String dni = txtDNI.getText();
 		String nom = txtNOMBRE.getText();
 		String ape = txtAPELLIDO.getText();
-		String dni = txtDNI.getText();
 		String tel = txtTELEF.getText();
 		String dir = txtDIREC.getText();
 		String pai = cboPAIS.getSelectedItem().toString();
@@ -411,9 +412,9 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		}  else {
 			Cliente cli = new Cliente();
 			cli.setIdCliente(idSeleccionado);
+			cli.setDni(dni);
 			cli.setNombre(nom);
 			cli.setApellido(ape);
-			cli.setDni(dni);
 			cli.setTelefono(tel);
 			cli.setDireccion(dir);
 			cli.setPais(pai);

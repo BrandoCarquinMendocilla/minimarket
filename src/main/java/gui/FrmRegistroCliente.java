@@ -142,7 +142,7 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		cboPais = new JComboBox();
 		cboPais.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar ", "Peru", "Colombia", "Argentina", "Bolivia", "Chile", "Uruguay", "Venezuela", "Brasil", "Paraguay", "Espa\u00F1a"}));
 		cboPais.addItem("Seleccionar");
-		cboPais.addItem("Peru");
+		cboPais.addItem("Perú");
 		cboPais.addItem("Colombia");
 		cboPais.addItem("Argentina");
 		cboPais.addItem("Bolivia");
@@ -288,9 +288,9 @@ public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 		Object[] fila = null;
 		for (Cliente x : lista) {
 			fila = new Object[] { x.getIdCliente(), 
+					x.getDni(),
 					x.getNombre(), 
 					x.getApellido(),
-					x.getDni(),
 					x.getTelefono(),
 					x.getDireccion(),
 					x.getPais()};

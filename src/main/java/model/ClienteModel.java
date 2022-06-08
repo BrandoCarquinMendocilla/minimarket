@@ -195,5 +195,49 @@ public class ClienteModel {
 		
 		return codigo;
 	}
+	public List<Cliente> ConsultaPorNombreDNI(String nombre , String dni){
+		ArrayList<Cliente> salida = new ArrayList<Cliente>();
+		
+		Connection conn= null;
+		PreparedStatement pstm= null;
+		ResultSet rs = null;
+		try {
+			// PASO 1 : CREAR LA CONEXION
+			conn = MySqlDBConexion.getConexion();
+			
+			// PASO 2 : SE PREPARA EL SQL
+			String sql = "SELECT * FROM usuario "
+					+ "where  (nombre like ?) and ( ? = '' or dni = ?)";
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, "%"+nombre+"%");
+			pstm.setString(2, dni);
+			pstm.setString(3, dni);
+			
+			// PASO 3 : EJECUTAMOS A LA BASE DE DATOS
+			rs = pstm.executeQuery();
+			Cliente obj = null;
+			while(rs.next()) {
+				obj= new Cliente();
+				obj.setIdCliente(rs.getInt(1));
+				obj.setDni(rs.getString(2));
+				obj.setNombre(rs.getString(3));
+				obj.setApellido(rs.getString(4));
+				obj.setTelefono(rs.getString(5));
+				obj.setDireccion(rs.getString(6));
+				obj.setPais(rs.getString(7));
+				salida.add(obj);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if (pstm!=null) 
+					pstm.close();
+				if (conn!=null) 
+					conn.close();	
+			} catch (Exception e2) {}
+		}
+		return salida;
+	}
 
 }
