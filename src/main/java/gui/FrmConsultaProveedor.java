@@ -28,6 +28,7 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 	private JTable table;
 	private JButton btnConsultar;
 	int hoveredRow = -1, hoveredColumn = -1;
+	private JTextField txtRuc;
 
 	/**
 	 * Launch the application.
@@ -63,13 +64,13 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 		getContentPane().add(btnConsultar);
 
 		txtFiltro = new JTextField();
-		txtFiltro.setBounds(168, 37, 204, 20);
+		txtFiltro.setBounds(157, 18, 204, 20);
 		getContentPane().add(txtFiltro);
 		txtFiltro.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("Nombre de Proveedor\r\n");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 12));
-		lblNewLabel.setBounds(10, 40, 137, 14);
+		lblNewLabel.setBounds(10, 21, 137, 14);
 		getContentPane().add(lblNewLabel);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -121,6 +122,16 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 			}
 		});
 		scrollPane.setViewportView(table);
+		
+		JLabel lblRucDeProveedor = new JLabel("RUC de Proveedor\r\n");
+		lblRucDeProveedor.setFont(new Font("Arial", Font.BOLD, 12));
+		lblRucDeProveedor.setBounds(10, 46, 137, 14);
+		getContentPane().add(lblRucDeProveedor);
+		
+		txtRuc = new JTextField();
+		txtRuc.setBounds(157, 43, 204, 20);
+		getContentPane().add(txtRuc);
+		txtRuc.setColumns(10);
 
 	}
 
@@ -132,6 +143,7 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 
 	protected void actionPerformedBtnConsultarJButton(ActionEvent e) {
 		String filtro = txtFiltro.getText().trim();
+		String ruc = txtRuc.getText().trim();
 
 		// 1 Se limpia los datos del jtable
 		DefaultTableModel dtm = (DefaultTableModel) table.getModel();
@@ -139,7 +151,7 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 
 		// 2 Se obtiene los campeonatos de la BD
 		ProveedorModel model = new ProveedorModel();
-		List<Proveedor> lista = model.listaProveedorPorNombre(filtro);
+		List<Proveedor> lista = model.listaProveedorPorNombreRuc(filtro , ruc);
 
 		// 3 Se muestran los campeonatos en el JTABLE
 
@@ -150,5 +162,4 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 		}
 
 	}
-
 }
