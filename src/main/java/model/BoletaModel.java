@@ -3,13 +3,15 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import entidad.Boleta;
+import entidad.Cliente;
 import entidad.DetalleBoleta;
-import entidad.Producto;
+import entidad.Empleado;
 import util.MySqlDBConexion;
 
 public class BoletaModel {
@@ -187,4 +189,100 @@ public class BoletaModel {
 		return salida;
 	}
 	
+	public List<Boleta> consultaBoleta(String idCliente){
+		ArrayList<Boleta> data = new ArrayList<Boleta>();
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null; //Trae la data de la BD
+		try {
+			con = MySqlDBConexion.getConexion();
+			String sql ="select co.idOrden,cl.Nombre,e.Nombre,co.ordenFecha,co.total from orden_compra co inner join cliente cl on co.idCliente  inner join"
+					+ "empleado e on co.idEmpleado= e.idEmpleado where co.idCliente = ?";  
+			pstm = con.prepareStatement(sql);
+			pstm.setString(1, idCliente);
+			System.out.println("SQL-->" + pstm);
+			rs = pstm.executeQuery();
+			
+			Boleta c = null;
+			Cliente g = null;
+			Empleado e = null;
+			while(rs.next()){
+				c = new Boleta();
+				c.setIdOrden(rs.getInt(1));
+				c.setFechaActual(rs.getDate(4));;
+				c.setTotal(rs.getDouble(5));
+				
+				g = new Cliente();
+				g.setNombre(rs.getString(2));
+				
+				e = new Empleado();
+				e.setNombre(rs.getString(3));
+				
+				
+				c.setCliente(g);
+				c.setEmpleado(e);
+				data.add(c);
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstm != null)pstm.close();
+				if (con != null)con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return data;
+	}
+	
+	public List<Boleta> listaBoleta(){
+		ArrayList<Boleta> data = new ArrayList<Boleta>();
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null; //Trae la data de la BD
+		try {
+			con = MySqlDBConexion.getConexion();
+			String sql ="select co.*,cl.Nombre,e.Nombre from orden_compra co inner join cliente cl on co.idCliente  inner join"
+					+ " empleado e on co.idEmpleado= e.idEmpleado ";  
+			pstm = con.prepareStatement(sql);
+			System.out.println("SQL-->" + pstm);
+			rs = pstm.executeQuery();
+			
+			Boleta c = null;
+			Cliente g = null;
+			Empleado e = null;
+			while(rs.next()){
+				c = new Boleta();
+				c.setIdOrden(rs.getInt(1));
+				c.setFechaActual(rs.getDate(4));;
+				c.setTotal(rs.getDouble(5));
+				
+				g = new Cliente();
+				g.setIdCliente(rs.getInt(2));
+				g.setNombre(rs.getString(6));
+				
+				e = new Empleado();
+				e.setIdEmpleado(rs.getInt(3));
+				e.setNombre(rs.getString(7));
+				
+				
+				c.setCliente(g);
+				c.setEmpleado(e);
+				data.add(c);
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstm != null)pstm.close();
+				if (con != null)con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return data;
+	}
 }
