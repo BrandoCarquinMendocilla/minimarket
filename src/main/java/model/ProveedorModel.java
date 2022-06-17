@@ -195,7 +195,7 @@ public class ProveedorModel {
 		return salida;
 	}
 
-	public List<Proveedor> listaProveedorPorNombre(String filtro) {
+	public List<Proveedor> listaProveedorPorNombreRuc(String nombre, String ruc) {
 		ArrayList<Proveedor> salida = new ArrayList<Proveedor>();
 
 		Connection conn = null;
@@ -205,9 +205,15 @@ public class ProveedorModel {
 		try {
 			conn = MySqlDBConexion.getConexion();
 
-			String sql = "call sp_busca_Proveedor(?)";
-			psmt = conn.prepareCall(sql);
-			psmt.setString(1, filtro+"%" );
+			String sql = "SELECT * FROM proveedor where "
+					
+					+ "(nombre like ?) and "
+					
+					+ "( ?='' or ruc=?);";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, "%"+nombre + "%");
+			psmt.setString(2, ruc);
+			psmt.setString(3, ruc);
 
 			log.info(">>> " + psmt);
 
