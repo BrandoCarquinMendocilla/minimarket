@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -25,10 +26,16 @@ import javax.swing.table.DefaultTableModel;
 import entidad.Boleta;
 import entidad.Cliente;
 import entidad.DetalleBoleta;
+import entidad.Empleado;
+import entidad.ReporteBoleta;
 import model.BoletaModel;
 import model.ClienteModel;
 import model.EmpleadoModel;
 import model.ProductoModel;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.swing.JRViewer;
+import util.GeneradorReporte;
 import util.JComboBoxBD;
 
 public class FrmBoletaVenta extends JInternalFrame {
@@ -46,7 +53,9 @@ public class FrmBoletaVenta extends JInternalFrame {
 
 	Boleta boleta = new Boleta();
 	List<DetalleBoleta> listaDetalle = new ArrayList<DetalleBoleta>();
+	List<ReporteBoleta> listaReporte = new ArrayList<ReporteBoleta>();
 	private JComboBox cboPais;
+	private JPanel panelRe;
 
 	/**
 	 * Launch the application.
@@ -169,13 +178,13 @@ public class FrmBoletaVenta extends JInternalFrame {
 		btnActualizarProducto.setBounds(372, 283, 164, 23);
 		getContentPane().add(btnActualizarProducto);
 
-		JPanel panelRe = new JPanel();
+		panelRe = new JPanel();
 		panelRe.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Boleta de Ventas", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelRe.setBounds(566, 11, 557, 740);
 		getContentPane().add(panelRe);
-		panelRe.setLayout(null);
+		panelRe.setLayout(new BorderLayout());
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(24, 349, 518, 374);
@@ -265,6 +274,11 @@ public class FrmBoletaVenta extends JInternalFrame {
 		getContentPane().add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("Generar Reporte");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				generarReporte();
+			}
+		});
 		btnNewButton_1.setBounds(418, 734, 118, 23);
 		getContentPane().add(btnNewButton_1);
 
@@ -327,9 +341,19 @@ public class FrmBoletaVenta extends JInternalFrame {
 		});
 		btnNewButton_2.setBounds(292, 83, 147, 23);
 		getContentPane().add(btnNewButton_2);
+		
+		btnPrueba = new JButton("Prueba");
+		btnPrueba.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				prueba();
+			}
+		});
+		btnPrueba.setBounds(208, 734, 89, 23);
+		getContentPane().add(btnPrueba);
 
 	}
-
+	int dato;
+	private JButton btnPrueba;
 	int cabecera() {
 		int salida = 1;
 		// Datos del empleado
@@ -362,7 +386,8 @@ public class FrmBoletaVenta extends JInternalFrame {
 		boleta.setTotal(total);
 		BoletaModel model = new BoletaModel();
 		salida = model.ingresarOrdenCompra(boleta);
-
+		
+		dato=salida;
 		return salida;
 	}
 
@@ -379,8 +404,6 @@ public class FrmBoletaVenta extends JInternalFrame {
 	void ejecutarVenta() {
 		int producto = ProductoModel.findByNombre(cboProducto.getSelectedItem().toString(),
 				rb.getString("TABLA_PRODUCTO"), rb.getString("CAMPO_PRODUCTO"));
-		;
-
 		double precio = ProductoModel.findByPrecio(cboProducto.getSelectedItem().toString(),
 				rb.getString("TABLA_PRODUCTO"), rb.getString("CAMPO_PRODUCTO"));
 		System.out.println(precio);
@@ -408,6 +431,109 @@ public class FrmBoletaVenta extends JInternalFrame {
 			dtm.addRow(fila);
 
 		}
+
+	}
+
+	void prueba() {
+		// Detalle de boleta
+				double precio = ProductoModel.findByPrecio(cboProducto.getSelectedItem().toString(),
+						rb.getString("TABLA_PRODUCTO"), rb.getString("CAMPO_PRODUCTO"));
+				System.out.println(precio);
+				int cantidad = Integer.parseInt(txtCantidadProducto.getText());
+				double subtotal = precio * cantidad;
+
+				ReporteBoleta report = new ReporteBoleta();
+				report.setIdOrden(dato);// idOrden
+				report.setNombreProducto(cboProducto.getSelectedItem().toString());// nombreProducto
+				report.setCantidadPro(cantidad);// cantidadPro
+				report.setPrecioPro(precio);// subtotal
+				report.setSubtotal(subtotal);// total
+
+				// Datos del cliente
+				int dni = ClienteModel.findByNombre(txtDNI.getText(), rb.getString("TABLA_CLIENTE"),
+						rb.getString("CAMPO_CLIENTE"));
+
+				ClienteModel model = new ClienteModel();
+				List<Cliente> lista = model.listaCliente();
+				for (Cliente x : lista) {
+					if (dni == x.getIdCliente()) {
+						report.setDni(x.getDni());//dniCli
+						report.setNomCli(x.getNombre());//nomCli
+						report.setApeCli(x.getApellido());//apeCli
+					}
+				}
+				// Datos del empleado
+				int empleado = EmpleadoModel.findByNombre(cboCajeros.getSelectedItem().toString(),
+						rb.getString("TABLA_EMPLEADO"), rb.getString("CAMPO_EMPLEADO"));
+				EmpleadoModel moEmp = new EmpleadoModel();
+				List<Empleado> listEmp = new ArrayList<Empleado>();
+				for (Empleado y : listEmp) {
+					if (empleado == y.getIdEmpleado()) {
+						report.setNomEmp(y.getNombre());//nomEmp
+						report.setApeEmp(y.getApellido());//apeEmp
+					}
+				}
+				
+				listaReporte.add(report);
+				System.out.println(listaReporte);
+	}
+	
+	
+	
+	
+	
+	// Reporte de Boleta
+	void generarReporte() {
+		// Detalle de boleta
+		double precio = ProductoModel.findByPrecio(cboProducto.getSelectedItem().toString(),
+				rb.getString("TABLA_PRODUCTO"), rb.getString("CAMPO_PRODUCTO"));
+		System.out.println(precio);
+		int cantidad = Integer.parseInt(txtCantidadProducto.getText());
+		double subtotal = precio * cantidad;
+
+		ReporteBoleta report = new ReporteBoleta();
+		report.setIdOrden(dato);// idOrden
+		report.setNombreProducto(cboProducto.getSelectedItem().toString());// nombreProducto
+		report.setCantidadPro(cantidad);// cantidadPro
+		report.setPrecioPro(precio);// subtotal
+		report.setSubtotal(subtotal);// total
+
+		// Datos del cliente
+		int dni = ClienteModel.findByNombre(txtDNI.getText(), rb.getString("TABLA_CLIENTE"),
+				rb.getString("CAMPO_CLIENTE"));
+
+		ClienteModel model = new ClienteModel();
+		List<Cliente> lista = model.listaCliente();
+		for (Cliente x : lista) {
+			if (dni == x.getIdCliente()) {
+				report.setDni(x.getDni());//dniCli
+				report.setNomCli(x.getNombre());//nomCli
+				report.setApeCli(x.getApellido());//apeCli
+			}
+		}
+		// Datos del empleado
+		int empleado = EmpleadoModel.findByNombre(cboCajeros.getSelectedItem().toString(),
+				rb.getString("TABLA_EMPLEADO"), rb.getString("CAMPO_EMPLEADO"));
+		EmpleadoModel moEmp = new EmpleadoModel();
+		List<Empleado> listEmp = new ArrayList<Empleado>();
+		for (Empleado y : listEmp) {
+			if (empleado == y.getIdEmpleado()) {
+				report.setNomEmp(y.getNombre());//nomEmp
+				report.setApeEmp(y.getApellido());//apeEmp
+			}
+		}
+
+		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listaReporte);
+		String jasper = "Boleta.jasper";
+
+		JasperPrint print = GeneradorReporte.genera(jasper, dataSource, null);
+
+		JRViewer jrViewer = new JRViewer(print);
+
+		panelRe.removeAll();
+		panelRe.add(jrViewer);
+		panelRe.repaint();
+		panelRe.revalidate();
 
 	}
 }

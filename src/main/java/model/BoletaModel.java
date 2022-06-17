@@ -127,4 +127,64 @@ public class BoletaModel {
 		return salida;
 	}
 	
+	
+	//Buscar Boleta
+	public List<Boleta> buscarAlumno(Integer codigo) {
+		ArrayList<Boleta> salida = new ArrayList<Boleta>();
+		
+		Connection conn= null;
+		PreparedStatement pstm= null;
+		ResultSet rs = null;
+		try {
+			//Se crea la conexcion
+			conn = MySqlDBConexion.getConexion();
+			
+			//Se prepara el sql
+			String sql = "select "
+					+ "	o.idOrden,"
+					+ "    c.nombre, "
+					+ "    e.nombre , "
+					+ "    p.nombre , "
+					+ "    d.cantidad ,"
+					+ "    p.precio , "
+					+ "    o.total "
+					+ "from orden_compra o  "
+					+ "inner join orden_detalle d on o.idOrden=d.idOrden "
+					+ "inner join producto p on d.idProducto=p.idProducto "
+					+ "inner join cliente c on o.idCliente=c.idCliente "
+					+ "inner join empleado e on o.idEmpleado=e.idEmpleado "
+					+ "where o.idOrden==?";
+			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1,codigo);
+			
+			System.out.println("SQL ---> "+pstm);
+			
+			rs = pstm.executeQuery();
+		
+			Boleta obj = null;
+			while(rs.next()) {
+				obj= new Boleta();
+				obj.setIdOrden(rs.getInt("idOrden"));
+				obj.setIdCliente(rs.getInt("idCliente"));
+				obj.setIdEmpleado(rs.getInt("idEmpleado"));
+				obj.setFechaActual(rs.getDate("fechaActual"));
+				obj.setTotal(rs.getDouble("total"));
+			
+				salida.add(obj);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if (pstm!=null) 
+					pstm.close();
+				if (conn!=null) 
+					conn.close();	
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return salida;
+	}
+	
 }
