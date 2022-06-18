@@ -80,12 +80,12 @@ public class FrmBoletaVenta extends JInternalFrame {
 		setTitle("Boleta de Venta\r\n");
 		setIconifiable(true);
 		setClosable(true);
-		setBounds(100, 100, 1167, 810);
+		setBounds(100, 100, 1167, 854);
 		getContentPane().setLayout(null);
 
 		JLabel lblNewLabel_1 = new JLabel("Datos del Cliente");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(34, 55, 118, 21);
+		lblNewLabel_1.setBounds(34, 49, 118, 21);
 		getContentPane().add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("DNI :");
@@ -268,9 +268,10 @@ public class FrmBoletaVenta extends JInternalFrame {
 				}
 
 				detalle(cabecera());
+				
 			}
 		});
-		btnNewButton.setBounds(24, 734, 121, 23);
+		btnNewButton.setBounds(285, 50, 121, 23);
 		getContentPane().add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("Generar Reporte");
@@ -279,7 +280,7 @@ public class FrmBoletaVenta extends JInternalFrame {
 				generarReporte();
 			}
 		});
-		btnNewButton_1.setBounds(418, 734, 118, 23);
+		btnNewButton_1.setBounds(418, 50, 118, 23);
 		getContentPane().add(btnNewButton_1);
 
 		JLabel lblNewLabel_2_1_2_1 = new JLabel("Pais:");
