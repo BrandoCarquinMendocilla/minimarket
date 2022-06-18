@@ -212,7 +212,7 @@ public class EmpleadoModel {
 		return codigo;
 	}
 	
-	public List<Empleado> ConsultaPorNombreDNI(String nombre , String dni){
+	public List<Empleado> ConsultaXNombre(String nombre , String dni){
 		ArrayList<Empleado> salida = new ArrayList<Empleado>();
 		
 		Connection conn= null;
@@ -223,7 +223,7 @@ public class EmpleadoModel {
 			conn = MySqlDBConexion.getConexion();
 			
 			// PASO 2 : SE PREPARA EL SQL
-			String sql = "SELECT * FROM usuario "
+			String sql = "SELECT * FROM Empleado "
 					+ "where  (nombre like ?) and ( ? = '' or dni = ?)";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, "%"+nombre+"%");
@@ -234,7 +234,7 @@ public class EmpleadoModel {
 			rs = pstm.executeQuery();
 			Empleado obj = null;
 			while(rs.next()) {
-				obj = new Empleado();
+				obj= new Empleado();
 				obj.setIdEmpleado(rs.getInt(1));
 				obj.setNombre(rs.getString(2));
 				obj.setApellido(rs.getString(3));

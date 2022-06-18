@@ -8,7 +8,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import entidad.Cliente;
 import entidad.Empleado;
+import model.ClienteModel;
 import model.EmpleadoModel;
 
 import java.awt.Font;
@@ -97,23 +99,21 @@ public class FrmConsultaEmpleado extends JInternalFrame {
 		getContentPane().add(btnConsultar);
 
 	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnConsultar) {
+			actionPerformedBtnConsultar(e);
+		}
+	}
 	protected void actionPerformedBtnConsultar(ActionEvent e) {
 		String nombre = txtNombre.getText();
 		String dni = txtDni.getText();
 		
 		EmpleadoModel model = new EmpleadoModel();
-		List<Empleado> lstCliente = model.ConsultaPorNombreDNI(nombre, dni);
+		List<Empleado> listar = model.ConsultaXNombre(nombre, dni);
 		DefaultTableModel dtm = (DefaultTableModel) miTabla.getModel();
 		Object[] fila = null;
-		for(Empleado x : lstCliente) {
-			fila = new Object[] { 
-					x.getIdEmpleado(),
-					x.getNombre(),
-					x.getApellido(),
-					x.getDni(),
-					x.getTelefono(),
-					x.getCorreo(),
-					x.getCategoria()};
+		for(Empleado x : listar) {
+			fila = new Object[] { x.getIdEmpleado(),x.getNombre(),x.getApellido(),x.getDni(),x.getTelefono(),x.getCorreo(),x.getCategoria()};
 			dtm.addRow(fila);
 		}
 	}
