@@ -8,14 +8,25 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import entidad.Cliente;
+import entidad.Empleado;
+import model.ClienteModel;
+import model.EmpleadoModel;
+
 import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.awt.event.ActionEvent;
 
 public class FrmConsultaEmpleado extends JInternalFrame {
 	private JTextField txtNombre;
 	private JTable miTabla;
-
+	private JTextField txtDni;
+	private JButton btnConsultar;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -39,8 +50,8 @@ public class FrmConsultaEmpleado extends JInternalFrame {
 		setIconifiable(true);
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setTitle("Consulta de Vendedor\r\n");
-		setBounds(100, 100, 850, 300);
+		setTitle("Consulta de Empleado\r\n");
+		setBounds(100, 100, 850, 350);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Buscar Empleado");
@@ -49,16 +60,16 @@ public class FrmConsultaEmpleado extends JInternalFrame {
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblIngreseNom = new JLabel("Ingrese Nombre : ");
-		lblIngreseNom.setBounds(10, 45, 99, 13);
+		lblIngreseNom.setBounds(20, 42, 99, 13);
 		getContentPane().add(lblIngreseNom);
 		
 		txtNombre = new JTextField();
-		txtNombre.setBounds(119, 42, 197, 19);
+		txtNombre.setBounds(129, 39, 197, 19);
 		getContentPane().add(txtNombre);
 		txtNombre.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 82, 818, 179);
+		scrollPane.setBounds(10, 107, 818, 204);
 		getContentPane().add(scrollPane);
 		
 		miTabla = new JTable();
@@ -67,6 +78,43 @@ public class FrmConsultaEmpleado extends JInternalFrame {
 				new String[] {"ID", "Nombre", "Apellido", "DNI", "Teléfono", "Correo","Categoria"}
 			));
 		scrollPane.setViewportView(miTabla);
+		
+		JLabel lblIngreseDni = new JLabel("Ingrese DNI: ");
+		lblIngreseDni.setBounds(20, 73, 99, 13);
+		getContentPane().add(lblIngreseDni);
+		
+		txtDni = new JTextField();
+		txtDni.setColumns(10);
+		txtDni.setBounds(129, 70, 110, 19);
+		getContentPane().add(txtDni);
+		
+		JButton btnConsultar = new JButton("CONSULTAR");
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnConsultar(e);
+			}
+		});
+		btnConsultar.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnConsultar.setBounds(474, 45, 178, 36);
+		getContentPane().add(btnConsultar);
 
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnConsultar) {
+			actionPerformedBtnConsultar(e);
+		}
+	}
+	protected void actionPerformedBtnConsultar(ActionEvent e) {
+		String nombre = txtNombre.getText();
+		String dni = txtDni.getText();
+		
+		EmpleadoModel model = new EmpleadoModel();
+		List<Empleado> listar = model.ConsultaXNombre(nombre, dni);
+		DefaultTableModel dtm = (DefaultTableModel) miTabla.getModel();
+		Object[] fila = null;
+		for(Empleado x : listar) {
+			fila = new Object[] { x.getIdEmpleado(),x.getNombre(),x.getApellido(),x.getDni(),x.getTelefono(),x.getCorreo(),x.getCategoria()};
+			dtm.addRow(fila);
+		}
 	}
 }

@@ -264,9 +264,9 @@ public class FrmCrudEmpleado extends JInternalFrame {
 	private void buscar() {
 		int fila = table .getSelectedRow();
 		idSeleccionado = (Integer)table.getValueAt(fila,0);
-		 String nombre = (String)table.getValueAt(fila, 2);
-		 String apellido = (String)table.getValueAt(fila, 3);
-		 String dni = (String)table.getValueAt(fila, 1);
+		 String nombre = (String)table.getValueAt(fila, 1);
+		 String apellido = (String)table.getValueAt(fila, 2);
+		 String dni = (String)table.getValueAt(fila, 3);
 		 String telefono = (String)table.getValueAt(fila, 4);
 		 String correo = (String)table.getValueAt(fila, 5);
 		 String categoria = (String)table.getValueAt(fila, 6);
