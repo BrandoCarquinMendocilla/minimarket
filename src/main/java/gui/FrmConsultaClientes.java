@@ -115,10 +115,10 @@ public class FrmConsultaClientes extends JInternalFrame implements ActionListene
 		String dni = txtDNI.getText();
 		
 		ClienteModel model = new ClienteModel();
-		List<Cliente> lstCliente = model.ConsultaPorNombreDNI(nombre, dni);
+		List<Cliente> listar = model.ConsultaPorNombreDNI(nombre, dni);
 		DefaultTableModel dtm = (DefaultTableModel) table.getModel();
 		Object[] fila = null;
-		for(Cliente x : lstCliente) {
+		for(Cliente x : listar) {
 			fila = new Object[] { x.getIdCliente(),x.getDni(),x.getNombre(),x.getApellido(),x.getTelefono(),x.getDireccion(),x.getPais()};
 			dtm.addRow(fila);
 		}

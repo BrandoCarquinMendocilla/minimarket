@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import entidad.Cliente;
 import entidad.Empleado;
 import util.MySqlDBConexion;
 
 public class EmpleadoModel {
 
-	private static Logger Log = Logger.getLogger(ClienteModel.class.getName());
+	private static Logger Log = Logger.getLogger(EmpleadoModel.class.getName());
 
 	public int RegistrarEmpleado(Empleado obj) {
 		int salida = -1;
@@ -25,7 +26,7 @@ public class EmpleadoModel {
 			conn = MySqlDBConexion.getConexion();
 			
 			//Se prepara el sql server
-			String sql = "insert into cliente value(null,?,?,?,?,?,?,?)";
+			String sql = "insert into empleado value(null,?,?,?,?,?,?)";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1,obj.getNombre());
 			pstm.setString(2,obj.getApellido());
@@ -92,7 +93,6 @@ public class EmpleadoModel {
 				if (pstm !=null) {
 					pstm.close();
 				}
-					
 			} catch (Exception e2) {
 			}
 		}
@@ -101,6 +101,8 @@ public class EmpleadoModel {
 	
 	
 	public int ActualizarEmpleado(Empleado obj) {
+		Logger Log = Logger.getLogger(EmpleadoModel.class.getName());
+		
 		int salida = -1;
 
 		Connection conn = null;
@@ -142,7 +144,8 @@ public class EmpleadoModel {
 	
 	
 	public int EliminarEmpleado(int idEmpleado) {
-
+		Logger Log = Logger.getLogger(EmpleadoModel.class.getName());
+		
 		int salida = -1;
 
 		Connection conn = null;
@@ -209,5 +212,49 @@ public class EmpleadoModel {
 		return codigo;
 	}
 	
+	public List<Empleado> ConsultaPorNombreDNI(String nombre , String dni){
+		ArrayList<Empleado> salida = new ArrayList<Empleado>();
+		
+		Connection conn= null;
+		PreparedStatement pstm= null;
+		ResultSet rs = null;
+		try {
+			// PASO 1 : CREAR LA CONEXION
+			conn = MySqlDBConexion.getConexion();
+			
+			// PASO 2 : SE PREPARA EL SQL
+			String sql = "SELECT * FROM usuario "
+					+ "where  (nombre like ?) and ( ? = '' or dni = ?)";
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, "%"+nombre+"%");
+			pstm.setString(2, dni);
+			pstm.setString(3, dni);
+			
+			// PASO 3 : EJECUTAMOS A LA BASE DE DATOS
+			rs = pstm.executeQuery();
+			Empleado obj = null;
+			while(rs.next()) {
+				obj = new Empleado();
+				obj.setIdEmpleado(rs.getInt(1));
+				obj.setNombre(rs.getString(2));
+				obj.setApellido(rs.getString(3));
+				obj.setDni(rs.getString(4));
+				obj.setTelefono(rs.getString(5));
+				obj.setCorreo(rs.getString(6));
+				obj.setCategoria(rs.getString(7));
+				salida.add(obj);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if (pstm!=null) 
+					pstm.close();
+				if (conn!=null) 
+					conn.close();	
+			} catch (Exception e2) {}
+		}
+		return salida;
+	}
 	
 }

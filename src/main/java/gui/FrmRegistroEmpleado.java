@@ -53,6 +53,7 @@ public class FrmRegistroEmpleado extends JInternalFrame implements KeyListener {
 	private JComboBox cboCategoria;
 	private JButton btnRegistrar;
 	private JTable table;
+	private JScrollPane scrollPane;
 
 	int hoveredRow = -1, hoveredColumn = -1;
 	
@@ -288,11 +289,11 @@ public class FrmRegistroEmpleado extends JInternalFrame implements KeyListener {
 		if (!nombre.matches(Validaciones.TEXTO)) {
 			mensaje("El nombre debe ser de 2 a 20 caracteres");
 		} else if (!apellido.matches(Validaciones.TEXTO)) {
-			mensaje("El nombre debe ser de 2 a 20 caracteres");
+			mensaje("El apellido debe ser de 2 a 20 caracteres");
 		} else if (!dni.matches(Validaciones.DNI)) {
 			mensaje("El DNI debe ser de 8 dígitos");
 		} else if (!telefono.matches(Validaciones.TELEFONO)) {
-			mensaje("El producto debe ser de 2 a 20 caracteres");
+			mensaje("El telefono debe ser de 9 digitos");
 		}else if (!correo.matches(Validaciones.CORREO)) {
 			mensaje("Correo no valido");
 		} else if (cboCategoria.getSelectedIndex() == 0) {
