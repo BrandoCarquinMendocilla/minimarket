@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
+ //brando
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -187,7 +187,7 @@ public class FrmBoletaVenta extends JInternalFrame {
 		panelRe.setLayout(new BorderLayout());
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(24, 349, 518, 374);
+		scrollPane.setBounds(24, 349, 518, 154);
 		getContentPane().add(scrollPane);
 
 		table = new JTable();
@@ -271,7 +271,7 @@ public class FrmBoletaVenta extends JInternalFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(285, 50, 121, 23);
+		btnNewButton.setBounds(418, 514, 121, 23);
 		getContentPane().add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("Generar Reporte");
@@ -280,7 +280,7 @@ public class FrmBoletaVenta extends JInternalFrame {
 				generarReporte();
 			}
 		});
-		btnNewButton_1.setBounds(418, 50, 118, 23);
+		btnNewButton_1.setBounds(34, 514, 118, 23);
 		getContentPane().add(btnNewButton_1);
 
 		JLabel lblNewLabel_2_1_2_1 = new JLabel("Pais:");
@@ -349,7 +349,7 @@ public class FrmBoletaVenta extends JInternalFrame {
 				prueba();
 			}
 		});
-		btnPrueba.setBounds(208, 734, 89, 23);
+		btnPrueba.setBounds(250, 514, 89, 23);
 		getContentPane().add(btnPrueba);
 
 	}
