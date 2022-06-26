@@ -206,8 +206,8 @@ public class ClienteModel {
 			conn = MySqlDBConexion.getConexion();
 			
 			// PASO 2 : SE PREPARA EL SQL
-			String sql = "SELECT * FROM Cliente "
-					+ "where  (nombre like ?) and ( ? = '' or dni = ?)";
+			String sql = "SELECT * FROM cliente "
+					+ "where  (nombre like ?) and ( ? = '' or DNI = ?)";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, "%"+nombre+"%");
 			pstm.setString(2, dni);

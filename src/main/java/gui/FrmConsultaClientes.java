@@ -53,7 +53,7 @@ public class FrmConsultaClientes extends JInternalFrame implements ActionListene
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Consulta de Clientes");
-		setBounds(100, 100, 776, 449);
+		setBounds(100, 100, 776, 388);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Busca al Cliente");
@@ -87,11 +87,11 @@ public class FrmConsultaClientes extends JInternalFrame implements ActionListene
 		btnCONSULTAR.addActionListener(this);
 		btnCONSULTAR.setIcon(new ImageIcon(FrmConsultaClientes.class.getResource("/iconos/Favourites.gif")));
 		btnCONSULTAR.setFont(new Font("Arial", Font.BOLD, 16));
-		btnCONSULTAR.setBounds(383, 78, 200, 32);
+		btnCONSULTAR.setBounds(554, 99, 200, 32);
 		getContentPane().add(btnCONSULTAR);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 209, 744, 201);
+		scrollPane.setBounds(10, 138, 744, 201);
 		getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -117,6 +117,7 @@ public class FrmConsultaClientes extends JInternalFrame implements ActionListene
 		ClienteModel model = new ClienteModel();
 		List<Cliente> listar = model.ConsultaPorNombreDNI(nombre, dni);
 		DefaultTableModel dtm = (DefaultTableModel) table.getModel();
+		dtm.setRowCount(0);
 		Object[] fila = null;
 		for(Cliente x : listar) {
 			fila = new Object[] { x.getIdCliente(),x.getDni(),x.getNombre(),x.getApellido(),x.getTelefono(),x.getDireccion(),x.getPais()};

@@ -37,6 +37,8 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.swing.JRViewer;
 import util.GeneradorReporte;
 import util.JComboBoxBD;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class FrmBoletaVenta extends JInternalFrame {
 	private JTextField txtDNI;
@@ -55,7 +57,6 @@ public class FrmBoletaVenta extends JInternalFrame {
 	List<DetalleBoleta> listaDetalle = new ArrayList<DetalleBoleta>();
 	List<ReporteBoleta> listaReporte = new ArrayList<ReporteBoleta>();
 	private JComboBox cboPais;
-	private JPanel panelRe;
 
 	/**
 	 * Launch the application.
@@ -80,7 +81,7 @@ public class FrmBoletaVenta extends JInternalFrame {
 		setTitle("Boleta de Venta\r\n");
 		setIconifiable(true);
 		setClosable(true);
-		setBounds(100, 100, 1167, 854);
+		setBounds(100, 100, 576, 686);
 		getContentPane().setLayout(null);
 
 		JLabel lblNewLabel_1 = new JLabel("Datos del Cliente");
@@ -93,6 +94,19 @@ public class FrmBoletaVenta extends JInternalFrame {
 		getContentPane().add(lblNewLabel_2);
 
 		txtDNI = new JTextField();
+		txtDNI.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (!Character.isDigit(e.getKeyChar())) {
+					e.consume();
+				}
+
+				String cantidad = txtDNI.getText() + e.getKeyChar();
+				if (cantidad.length() > 8) {
+					e.consume();
+				}
+			}
+		});
 		txtDNI.setBounds(98, 84, 177, 20);
 		getContentPane().add(txtDNI);
 		txtDNI.setColumns(10);
@@ -110,6 +124,19 @@ public class FrmBoletaVenta extends JInternalFrame {
 		getContentPane().add(lblNewLabel_5);
 
 		txtCantidadProducto = new JTextField();
+		txtCantidadProducto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (!Character.isDigit(e.getKeyChar())) {
+					e.consume();
+				}
+
+				String cantidad = txtCantidadProducto.getText() + e.getKeyChar();
+				if (cantidad.length() > 3) {
+					e.consume();
+				}
+			}
+		});
 		txtCantidadProducto.setBounds(418, 238, 118, 20);
 		getContentPane().add(txtCantidadProducto);
 		txtCantidadProducto.setColumns(10);
@@ -178,14 +205,6 @@ public class FrmBoletaVenta extends JInternalFrame {
 		btnActualizarProducto.setBounds(372, 283, 164, 23);
 		getContentPane().add(btnActualizarProducto);
 
-		panelRe = new JPanel();
-		panelRe.setBorder(new TitledBorder(
-				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
-				"Boleta de Ventas", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelRe.setBounds(566, 11, 557, 740);
-		getContentPane().add(panelRe);
-		panelRe.setLayout(new BorderLayout());
-
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(24, 349, 518, 154);
 		getContentPane().add(scrollPane);
@@ -218,6 +237,14 @@ public class FrmBoletaVenta extends JInternalFrame {
 		getContentPane().add(lblNewLabel_2_1);
 
 		txtNombres = new JTextField();
+		txtNombres.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (Character.isDigit(e.getKeyChar())) {
+					e.consume();
+				}
+			}
+		});
 		txtNombres.setEditable(false);
 		txtNombres.setColumns(10);
 		txtNombres.setBounds(98, 115, 177, 20);
@@ -228,6 +255,14 @@ public class FrmBoletaVenta extends JInternalFrame {
 		getContentPane().add(lblNewLabel_2_1_1);
 
 		txtApellidos = new JTextField();
+		txtApellidos.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (Character.isDigit(e.getKeyChar())) {
+					e.consume();
+				}
+			}
+		});
 		txtApellidos.setEditable(false);
 		txtApellidos.setColumns(10);
 		txtApellidos.setBounds(350, 115, 186, 20);
@@ -253,6 +288,19 @@ public class FrmBoletaVenta extends JInternalFrame {
 		getContentPane().add(lblNewLabel_1_1);
 
 		txtTelefono = new JTextField();
+		txtTelefono.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (!Character.isDigit(e.getKeyChar())) {
+					e.consume();
+				}
+
+				String cantidad = txtCantidadProducto.getText() + e.getKeyChar();
+				if (cantidad.length() > 9) {
+					e.consume();
+				}
+			}
+		});
 		txtTelefono.setEditable(false);
 		txtTelefono.setBounds(99, 171, 176, 20);
 		getContentPane().add(txtTelefono);
@@ -271,17 +319,8 @@ public class FrmBoletaVenta extends JInternalFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(418, 514, 121, 23);
+		btnNewButton.setBounds(34, 514, 502, 23);
 		getContentPane().add(btnNewButton);
-
-		JButton btnNewButton_1 = new JButton("Generar Reporte");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				generarReporte();
-			}
-		});
-		btnNewButton_1.setBounds(34, 514, 118, 23);
-		getContentPane().add(btnNewButton_1);
 
 		JLabel lblNewLabel_2_1_2_1 = new JLabel("Pais:");
 		lblNewLabel_2_1_2_1.setBounds(285, 174, 86, 14);
@@ -342,19 +381,9 @@ public class FrmBoletaVenta extends JInternalFrame {
 		});
 		btnNewButton_2.setBounds(292, 83, 147, 23);
 		getContentPane().add(btnNewButton_2);
-		
-		btnPrueba = new JButton("Prueba");
-		btnPrueba.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				prueba();
-			}
-		});
-		btnPrueba.setBounds(250, 514, 89, 23);
-		getContentPane().add(btnPrueba);
 
 	}
 	int dato;
-	private JButton btnPrueba;
 	int cabecera() {
 		int salida = 1;
 		// Datos del empleado
@@ -378,28 +407,35 @@ public class FrmBoletaVenta extends JInternalFrame {
 			cli.setDireccion(direccion);
 			cli.setPais(pais);
 			dni = cli.getIdCliente();
+		}else if(empleado == -1) {
+			JOptionPane.showMessageDialog(null, "Seleccione el empleado ");
+			salida =-1;
+		}else {
+			double total = listaDetalle.stream().mapToDouble(i -> i.getSubtotal()).sum();
+
+			boleta.setIdEmpleado(empleado);
+			boleta.setIdCliente(dni);
+			boleta.setTotal(total);
+			BoletaModel model = new BoletaModel();
+			salida = model.ingresarOrdenCompra(boleta);
+			dato=salida;
 		}
-
-		double total = listaDetalle.stream().mapToDouble(i -> i.getSubtotal()).sum();
-
-		boleta.setIdEmpleado(empleado);
-		boleta.setIdCliente(dni);
-		boleta.setTotal(total);
-		BoletaModel model = new BoletaModel();
-		salida = model.ingresarOrdenCompra(boleta);
 		
-		dato=salida;
 		return salida;
 	}
 
 	void detalle(int idOrden) {
 
-		listaDetalle.forEach(detalleBoleta -> {
-			detalleBoleta.setIdOrden(idOrden);
-			BoletaModel model = new BoletaModel();
-			int salida2 = model.ingresarDetalleOrden(detalleBoleta);
-		});
-
+		if(idOrden == -1) {
+			JOptionPane.showMessageDialog(null, "Datos incorrectos");
+		}else {
+			listaDetalle.forEach(detalleBoleta -> {
+				detalleBoleta.setIdOrden(idOrden);
+				BoletaModel model = new BoletaModel();
+				int salida2 = model.ingresarDetalleOrden(detalleBoleta);
+			});
+			JOptionPane.showMessageDialog(null, "Boleta ejecutada");
+		}
 	}
 
 	void ejecutarVenta() {
@@ -410,15 +446,19 @@ public class FrmBoletaVenta extends JInternalFrame {
 		System.out.println(precio);
 		int cantidad = Integer.parseInt(txtCantidadProducto.getText());
 		double subtotal = precio * cantidad;
+		
+		if(producto == -1) {
+			JOptionPane.showMessageDialog(null, "Seleccione un productos");
+		}else {
+			DetalleBoleta lista2 = new DetalleBoleta();
+			lista2.setIdProducto(producto);
+			lista2.setNombreProducto(cboProducto.getSelectedItem().toString());
+			lista2.setCantidad(cantidad);
+			lista2.setSubtotal(subtotal);
 
-		DetalleBoleta lista2 = new DetalleBoleta();
-		lista2.setIdProducto(producto);
-		lista2.setNombreProducto(cboProducto.getSelectedItem().toString());
-		lista2.setCantidad(cantidad);
-		lista2.setSubtotal(subtotal);
-
-		listaDetalle.add(lista2);
-		listarDetalleOrden();
+			listaDetalle.add(lista2);
+			listarDetalleOrden();
+		}
 
 	}
 
@@ -433,108 +473,7 @@ public class FrmBoletaVenta extends JInternalFrame {
 
 		}
 
-	}
-
-	void prueba() {
-		// Detalle de boleta
-				double precio = ProductoModel.findByPrecio(cboProducto.getSelectedItem().toString(),
-						rb.getString("TABLA_PRODUCTO"), rb.getString("CAMPO_PRODUCTO"));
-				System.out.println(precio);
-				int cantidad = Integer.parseInt(txtCantidadProducto.getText());
-				double subtotal = precio * cantidad;
-
-				ReporteBoleta report = new ReporteBoleta();
-				report.setIdOrden(dato);// idOrden
-				report.setNombreProducto(cboProducto.getSelectedItem().toString());// nombreProducto
-				report.setCantidadPro(cantidad);// cantidadPro
-				report.setPrecioPro(precio);// subtotal
-				report.setSubtotal(subtotal);// total
-
-				// Datos del cliente
-				int dni = ClienteModel.findByNombre(txtDNI.getText(), rb.getString("TABLA_CLIENTE"),
-						rb.getString("CAMPO_CLIENTE"));
-
-				ClienteModel model = new ClienteModel();
-				List<Cliente> lista = model.listaCliente();
-				for (Cliente x : lista) {
-					if (dni == x.getIdCliente()) {
-						report.setDni(x.getDni());//dniCli
-						report.setNomCli(x.getNombre());//nomCli
-						report.setApeCli(x.getApellido());//apeCli
-					}
-				}
-				// Datos del empleado
-				int empleado = EmpleadoModel.findByNombre(cboCajeros.getSelectedItem().toString(),
-						rb.getString("TABLA_EMPLEADO"), rb.getString("CAMPO_EMPLEADO"));
-				EmpleadoModel moEmp = new EmpleadoModel();
-				List<Empleado> listEmp = new ArrayList<Empleado>();
-				for (Empleado y : listEmp) {
-					if (empleado == y.getIdEmpleado()) {
-						report.setNomEmp(y.getNombre());//nomEmp
-						report.setApeEmp(y.getApellido());//apeEmp
-					}
-				}
-				
-				listaReporte.add(report);
-				System.out.println(listaReporte);
-	}
-	
-	
-	
-	
-	
-	// Reporte de Boleta
-	void generarReporte() {
-		// Detalle de boleta
-		double precio = ProductoModel.findByPrecio(cboProducto.getSelectedItem().toString(),
-				rb.getString("TABLA_PRODUCTO"), rb.getString("CAMPO_PRODUCTO"));
-		System.out.println(precio);
-		int cantidad = Integer.parseInt(txtCantidadProducto.getText());
-		double subtotal = precio * cantidad;
-
-		ReporteBoleta report = new ReporteBoleta();
-		report.setIdOrden(dato);// idOrden
-		report.setNombreProducto(cboProducto.getSelectedItem().toString());// nombreProducto
-		report.setCantidadPro(cantidad);// cantidadPro
-		report.setPrecioPro(precio);// subtotal
-		report.setSubtotal(subtotal);// total
-
-		// Datos del cliente
-		int dni = ClienteModel.findByNombre(txtDNI.getText(), rb.getString("TABLA_CLIENTE"),
-				rb.getString("CAMPO_CLIENTE"));
-
-		ClienteModel model = new ClienteModel();
-		List<Cliente> lista = model.listaCliente();
-		for (Cliente x : lista) {
-			if (dni == x.getIdCliente()) {
-				report.setDni(x.getDni());//dniCli
-				report.setNomCli(x.getNombre());//nomCli
-				report.setApeCli(x.getApellido());//apeCli
-			}
-		}
-		// Datos del empleado
-		int empleado = EmpleadoModel.findByNombre(cboCajeros.getSelectedItem().toString(),
-				rb.getString("TABLA_EMPLEADO"), rb.getString("CAMPO_EMPLEADO"));
-		EmpleadoModel moEmp = new EmpleadoModel();
-		List<Empleado> listEmp = new ArrayList<Empleado>();
-		for (Empleado y : listEmp) {
-			if (empleado == y.getIdEmpleado()) {
-				report.setNomEmp(y.getNombre());//nomEmp
-				report.setApeEmp(y.getApellido());//apeEmp
-			}
-		}
-
-		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listaReporte);
-		String jasper = "Boleta.jasper";
-
-		JasperPrint print = GeneradorReporte.genera(jasper, dataSource, null);
-
-		JRViewer jrViewer = new JRViewer(print);
-
-		panelRe.removeAll();
-		panelRe.add(jrViewer);
-		panelRe.repaint();
-		panelRe.revalidate();
+		
 
 	}
 }

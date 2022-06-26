@@ -54,13 +54,13 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 		setIconifiable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Consulta de Proveedor\r\n");
-		setBounds(100, 100, 680, 340);
+		setBounds(100, 100, 728, 318);
 		getContentPane().setLayout(null);
 
 		btnConsultar = new JButton("CONSULTAR\r\n");
 		btnConsultar.addActionListener(this);
 		btnConsultar.setFont(new Font("Arial Black", Font.BOLD, 14));
-		btnConsultar.setBounds(403, 34, 143, 23);
+		btnConsultar.setBounds(559, 40, 143, 23);
 		getContentPane().add(btnConsultar);
 
 		txtFiltro = new JTextField();
@@ -74,7 +74,7 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 		getContentPane().add(lblNewLabel);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 98, 644, 201);
+		scrollPane.setBounds(10, 74, 692, 201);
 		getContentPane().add(scrollPane);
 
 		table = new JTable();
@@ -82,7 +82,7 @@ public class FrmConsultaProveedor extends JInternalFrame implements ActionListen
 				"Direcci\u00F3n", "Correo", "Pa\u00EDs", "Tel\u00E9fono" }));
 
 		// tamano de la fila
-		table.getColumnModel().getColumn(0).setPreferredWidth(20);
+		table.getColumnModel().getColumn(0).setPreferredWidth(40);
 		table.getColumnModel().getColumn(1).setPreferredWidth(150);
 		table.getColumnModel().getColumn(2).setPreferredWidth(130);
 		table.getColumnModel().getColumn(3).setPreferredWidth(150);

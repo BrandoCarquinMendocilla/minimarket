@@ -85,7 +85,7 @@ public class FrmConsultaEmpleado extends JInternalFrame {
 		
 		txtDni = new JTextField();
 		txtDni.setColumns(10);
-		txtDni.setBounds(129, 70, 110, 19);
+		txtDni.setBounds(129, 70, 197, 19);
 		getContentPane().add(txtDni);
 		
 		JButton btnConsultar = new JButton("CONSULTAR");
@@ -95,7 +95,7 @@ public class FrmConsultaEmpleado extends JInternalFrame {
 			}
 		});
 		btnConsultar.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnConsultar.setBounds(474, 45, 178, 36);
+		btnConsultar.setBounds(650, 58, 178, 36);
 		getContentPane().add(btnConsultar);
 
 	}
@@ -112,6 +112,7 @@ public class FrmConsultaEmpleado extends JInternalFrame {
 		List<Empleado> listar = model.ConsultaXNombre(nombre, dni);
 		DefaultTableModel dtm = (DefaultTableModel) miTabla.getModel();
 		Object[] fila = null;
+		dtm.setRowCount(0);
 		for(Empleado x : listar) {
 			fila = new Object[] { x.getIdEmpleado(),x.getNombre(),x.getApellido(),x.getDni(),x.getTelefono(),x.getCorreo(),x.getCategoria()};
 			dtm.addRow(fila);
